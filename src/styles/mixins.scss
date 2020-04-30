@@ -1,0 +1,7 @@
+@mixin custom-card($width, $padding, $background) {
+  mat-card {
+    width: $width;
+    padding: $padding;
+    background: $background;
+  }
+}

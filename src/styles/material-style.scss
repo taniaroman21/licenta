@@ -1,0 +1,16 @@
+mat-card {
+  background-color: #ffffff;
+}
+mat-card-content {
+  padding: 25px 50px;
+}
+mat-card-header {
+  text-align: center;
+  .mat-card-header-text {
+    width: 100%;
+  }
+}
+mat-card-footer {
+  padding: 0 100px;
+  text-align: center;
+}

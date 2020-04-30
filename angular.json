@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -89,7 +89,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/styles.scss"
             ],
             "scripts": []
           }
@@ -120,6 +120,15 @@
           }
         }
       }
-    }},
-  "defaultProject": "MedCare"
+    }
+  },
+  "defaultProject": "MedCare",
+  "cli": {
+    "analytics": "e16efbdd-6ed8-4d32-a963-62891d34075c"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

@@ -1,0 +1,55 @@
+.menu-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: white;
+  padding: 10px 100px;
+  position: relative;
+  .login-btn-wrapper {
+    border-left: 1px dotted #7382bf;
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    padding: 10px 0 10px 20px;
+    top: 10px;
+    right: 50px;
+    width: 240px;
+
+    .login-btn {
+      color: white;
+    }
+    .register {
+      background: none;
+      border: 0px solid white;
+      cursor: pointer;
+      color: #303c69;
+      font-size: 14px;
+      transition: all 0.2s;
+      &:hover {
+        border-bottom: 1px solid #303c69;
+      }
+    }
+  }
+
+  .menu-btn {
+    background: none;
+    border: none;
+    color: #303c69;
+    cursor: pointer;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding: 15px 0;
+    margin: 0 40px;
+    transition: all 0.2s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .active {
+    border-bottom: 3px solid #7382bf;
+    color: #7382bf;
+    &:hover {
+      transform: none;
+    }
+  }
+}

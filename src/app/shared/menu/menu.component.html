@@ -1,0 +1,9 @@
+<div class='menu-wrapper'>
+    <button class="menu-btn" [ngClass]="{'active': active==0}"> About us</button>
+    <button class="menu-btn" [ngClass]="{'active': active==1}"> Contact</button>
+    <button class="menu-btn" [ngClass]="{'active': active==2}"> Clinics</button>
+    <div class="login-btn-wrapper">
+        <button class="login-btn default-btn" routerLink="/login"> Sign in</button>
+        <button class="register" routerLink="/login">Sing up</button>
+    </div>
+</div>
