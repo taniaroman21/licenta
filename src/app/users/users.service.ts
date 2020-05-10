@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
-
-
+import { UserRegisterModel } from './user.model';
+import { environment } from '../../environments/environment';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  constructor(public http: HttpClient, public localStorageService: LocalStorageService) { }
 
-  constructor(public http: HttpClient) { }
+  public token = this.localStorageService.getToken();
+  public header: HttpHeaders = new HttpHeaders({
+    'x-auth-token': this.token
+  })
 
-  public registerUser(userBodyReq: any): Observable<any> {
-    return this.http.post<any>('/register', userBodyReq);
+  public registerUser(userBodyReq: UserRegisterModel): Observable<any> {
+    return this.http.post(environment.apiEndpoint + '/users/register', userBodyReq, { responseType: 'text' });
+  }
+
+  public getLogin(userLoginReq): Observable<any> {
+    return this.http.post(environment.apiEndpoint + '/auth', userLoginReq, { responseType: 'json' });
   }
 }

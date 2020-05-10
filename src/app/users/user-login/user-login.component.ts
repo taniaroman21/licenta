@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UsersService } from '../users.service';
+import { UserRegisterModel } from '../user.model';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login',
@@ -12,7 +16,7 @@ export class UserLoginComponent implements OnInit {
   public register: boolean = false;
   public registerAsUser: boolean = true;
   public registerAsClinic: boolean = false;
-  constructor(public formBuilder: FormBuilder) { }
+  constructor(public formBuilder: FormBuilder, private userService: UsersService, public localStorageService: LocalStorageService, public router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -27,5 +31,23 @@ export class UserLoginComponent implements OnInit {
       repeatPassword: ['', Validators.required]
     })
   }
-
+  public registerUser() {
+    if (this.registerForm.valid) {
+      let user: UserRegisterModel = new UserRegisterModel(this.registerForm.controls["email"].value,
+        this.registerForm.controls["firstName"].value,
+        this.registerForm.controls["lastName"].value,
+        this.registerForm.controls["password"].value,
+        this.registerForm.controls["repeatPassword"].value
+      )
+      this.userService.registerUser(user).subscribe(res => {
+        this.register = false;
+      })
+    }
+  }
+  public getLogin() {
+    this.userService.getLogin({ email: this.loginForm.controls["email"].value, password: this.loginForm.controls["password"].value }).subscribe(res => {
+      this.localStorageService.setToken(res);
+      // this.router.navigateByUrl("/home");
+    })
+  }
 }

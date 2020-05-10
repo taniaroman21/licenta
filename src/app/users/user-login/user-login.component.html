@@ -61,11 +61,11 @@
         </mat-card-content>
         <mat-card-footer>
             <mat-card-actions *ngIf="!register">
-                <button mat-button class="login-btn default-btn">LOG IN</button> <br />
+                <button mat-button class="login-btn default-btn" (click)="getLogin()">LOG IN</button> <br />
                 <button class="register" (click)="register=true">Don't have an account? Register now</button>
             </mat-card-actions>
             <mat-card-actions *ngIf="register">
-                <button mat-button class="login-btn default-btn">REGISTER</button> <br />
+                <button mat-button class="login-btn default-btn" (click)="registerUser()">REGISTER</button> <br />
                 <button class="register" (click)="register=false">Back to Log In</button></mat-card-actions>
         </mat-card-footer>
     </mat-card>
