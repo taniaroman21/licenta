@@ -31,31 +31,85 @@
                     <mat-label>
                         Email
                     </mat-label>
-                    <input matInput type="email" formControlName="email" autocomplete="off">
+                    <input matInput type="email" formControlName="email" autocomplete="off"
+                        placeholder="Please enter a valid email address...">
                 </mat-form-field>
                 <mat-form-field floatLabel="always">
                     <mat-label>
                         First Name
                     </mat-label>
-                    <input matInput type="text" formControlName="firstName" autocomplete="off">
+                    <input matInput type="text" formControlName="firstName" autocomplete="off"
+                        placeholder="Please enter your first name and middle names if existent...">
                 </mat-form-field>
                 <mat-form-field floatLabel="always">
                     <mat-label>
                         Last Name
                     </mat-label>
-                    <input matInput type="text" formControlName="lastName" autocomplete="off">
+                    <input matInput type="text" formControlName="lastName" autocomplete="off"
+                        placeholder="Please enter your last name...">
                 </mat-form-field>
                 <mat-form-field floatLabel="always">
                     <mat-label>
                         Password
                     </mat-label>
-                    <input matInput type="password" formControlName="password">
+                    <input matInput type="password" formControlName="password"
+                        placeholder="Please enter a solid password...">
                 </mat-form-field>
                 <mat-form-field floatLabel="always">
                     <mat-label>
                         Repeat Password
                     </mat-label>
-                    <input matInput type="password" formControlName="repeatPassword">
+                    <input matInput type="password" formControlName="repeatPassword"
+                        placeholder="Please repeat your password...">
+                </mat-form-field>
+            </form>
+            <form [formGroup]="registerClinicForm" *ngIf="register && !registerAsUser">
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        Email
+                    </mat-label>
+                    <input matInput type="email" formControlName="email" autocomplete="off"
+                        placeholder="The email of the clinic...">
+                </mat-form-field>
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        Clinic Name
+                    </mat-label>
+                    <input matInput type="text" formControlName="name" autocomplete="off"
+                        placeholder="The exact name that the clinic is registered under..">
+                </mat-form-field>
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        County
+                    </mat-label>
+                    <mat-select formControlName="county" (selectionChange)="showCities()"
+                        placeholder="Please select county">
+                        <mat-option *ngFor="let county of counties" [value]="county">
+                            {{county.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        City
+                    </mat-label>
+                    <mat-select formControlName="city" placeholder="Please select city">
+                        <mat-option *ngFor="let city of cities" [value]="city">
+                            {{city.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        Password
+                    </mat-label>
+                    <input matInput type="password" formControlName="password" placeholder="Enter a strong password...">
+                </mat-form-field>
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        Repeat Password
+                    </mat-label>
+                    <input matInput type="password" formControlName="repeatPassword" placeholder="Password again...">
                 </mat-form-field>
             </form>
         </mat-card-content>

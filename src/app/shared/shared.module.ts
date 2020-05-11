@@ -4,10 +4,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -15,6 +17,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   exports: [
     CommonModule,
     MatInputModule,
+    MatSelectModule,
     MatFormFieldModule,
     MatCardModule,
     ReactiveFormsModule,
