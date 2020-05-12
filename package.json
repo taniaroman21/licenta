@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^9.0.6",
     "@angular/platform-browser-dynamic": "^9.0.6",
     "@angular/router": "^9.0.6",
+    "lodash": "^4.17.15",
     "zone.js": "^0.10.3"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@angular/cli": "^9.0.6",
     "@angular/compiler-cli": "^9.0.6",
     "@types/jasmine": "^3.5.9",
+    "@types/lodash": "^4.14.150",
     "@types/node": "^13.9.0",
     "jasmine-core": "^3.5.0",
     "karma": "^4.4.1",
