@@ -61,6 +61,9 @@
                     </mat-label>
                     <input matInput type="password" formControlName="repeatPassword"
                         placeholder="Please repeat your password...">
+                    <mat-hint *ngIf="registerForm.errors?.unmatch && (registerForm.touched || registerForm.dirty)">
+                        Passwords
+                        have to match</mat-hint>
                 </mat-form-field>
             </form>
             <form [formGroup]="registerClinicForm" *ngIf="register && !registerAsUser">
@@ -110,6 +113,10 @@
                         Repeat Password
                     </mat-label>
                     <input matInput type="password" formControlName="repeatPassword" placeholder="Password again...">
+                    <mat-hint
+                        *ngIf="registerClinicForm.errors?.unmatch && (registerForm.touched || registerForm.dirty)">
+                        Passwords
+                        have to match</mat-hint>
                 </mat-form-field>
             </form>
         </mat-card-content>
