@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-header-text>
+        <mat-card-title-group>
+            <mat-card-title>
+                {{clinic.name}}
+            </mat-card-title>
+            <img mat-card-avatar
+                src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_weight_other/1800x1200_cat_weight_other.jpg?resize=600px:*">
+            <mat-card-subtitle>
+                {{clinic.name}}
+            </mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-header-text>
+    <mat-divider></mat-divider>
+
+
+
+
+    <mat-card-content>
+        <p>{{clinic.city.name}}, {{clinic.county.name}}</p>
+    </mat-card-content>
+
+
+</mat-card>

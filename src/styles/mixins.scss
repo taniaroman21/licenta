@@ -5,3 +5,13 @@
     background: $background;
   }
 }
+
+@mixin list-card($height) {
+  mat-card {
+    border-radius: 0;
+    box-sizing: border-box;
+    height: $height;
+    position: relative;
+    margin: auto;
+  }
+}

@@ -72,7 +72,7 @@ export class UserLoginComponent implements OnInit {
   }
   public getLogin() {
     this.userService.getLogin({ email: this.loginForm.controls["email"].value, password: this.loginForm.controls["password"].value }).subscribe(res => {
-      this.localStorageService.setToken(res);
+      this.localStorageService.setToken(res.token);
       this.router.navigateByUrl("/home");
     })
   }

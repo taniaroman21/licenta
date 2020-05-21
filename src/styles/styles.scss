@@ -3,7 +3,8 @@
 @import "./variables.scss";
 @import "./material-style.scss";
 body {
-  background: linear-gradient(#ebefff, #b3c2ff);
+  // background: linear-gradient(#ebefff, #b3c2ff);
+  background: rgba($default-background, 0.1);
   margin: 0;
 }
 * {
