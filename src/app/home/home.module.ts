@@ -6,15 +6,17 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { MenuComponent } from '../shared/menu/menu.component';
 import { SharedModule } from '../shared/shared.module';
+import { ClinicsService } from '../clinics/clinics.service';
+import { ClinicsModule } from '../clinics/clinics.module';
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
   imports: [
-    CommonModule,
     HomeRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
+  providers:[ClinicsService]
 })
 export class HomeModule { }

@@ -9,19 +9,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { ClinicListItemComponent } from './clinic-list-item/clinic-list-item.component';
+import { MatDividerModule } from '@angular/material/divider'
 
 
 
 @NgModule({
-  declarations: [MenuComponent],
+  declarations: [MenuComponent, ClinicListItemComponent],
   exports: [
     CommonModule,
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
     MatCardModule,
+    MatDividerModule,
     ReactiveFormsModule,
     MenuComponent,
+    ClinicListItemComponent,
     RouterModule,
     HttpClientModule
   ]

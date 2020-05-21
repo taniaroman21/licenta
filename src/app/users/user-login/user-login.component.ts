@@ -6,6 +6,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { Router } from '@angular/router';
 import { locations } from '../../../assets/locations';
 import * as _ from 'lodash';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 
 @Component({
   selector: 'app-user-login',
@@ -21,7 +22,11 @@ export class UserLoginComponent implements OnInit {
   public registerAsClinic: boolean = false;
   public counties: any[];
   public cities: any[] = [];
-  constructor(public formBuilder: FormBuilder, private userService: UsersService, public localStorageService: LocalStorageService, public router: Router) {
+  constructor(public formBuilder: FormBuilder,
+    private userService: UsersService,
+    public localStorageService: LocalStorageService,
+    public router: Router,
+    public utilsService: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -35,7 +40,7 @@ export class UserLoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
-    });
+    }, { validators: this.utilsService.customPosswordMatchValidator });
     this.registerClinicForm = this.formBuilder.group({
       email: ['', Validators.required],
       name: ['', Validators.required],
@@ -43,7 +48,7 @@ export class UserLoginComponent implements OnInit {
       city: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
-    });
+    }, { validators: this.utilsService.customPosswordMatchValidator });
     this.counties = locations.states;
 
   }
@@ -67,7 +72,7 @@ export class UserLoginComponent implements OnInit {
   }
   public getLogin() {
     this.userService.getLogin({ email: this.loginForm.controls["email"].value, password: this.loginForm.controls["password"].value }).subscribe(res => {
-      this.localStorageService.setToken(res);
+      this.localStorageService.setToken(res.token);
       this.router.navigateByUrl("/home");
     })
   }
