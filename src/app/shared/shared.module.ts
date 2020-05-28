@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ClinicListItemComponent } from './clinic-list-item/clinic-list-item.component';
 import { MatDividerModule } from '@angular/material/divider'
+import { UsersService } from '../users/users.service';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -24,10 +26,12 @@ import { MatDividerModule } from '@angular/material/divider'
     MatCardModule,
     MatDividerModule,
     ReactiveFormsModule,
+    MatMenuModule,
     MenuComponent,
     ClinicListItemComponent,
     RouterModule,
     HttpClientModule
-  ]
+  ],
+  providers: [UsersService]
 })
 export class SharedModule { }

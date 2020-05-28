@@ -27,6 +27,10 @@ export class UserLoginComponent implements OnInit {
     public localStorageService: LocalStorageService,
     public router: Router,
     public utilsService: UtilsService) {
+    if (this.localStorageService.getToken()) {
+      this.router.navigateByUrl('/home');
+      console.log(this.localStorageService.getToken());
+    }
   }
 
   ngOnInit(): void {
@@ -50,7 +54,6 @@ export class UserLoginComponent implements OnInit {
       repeatPassword: ['', Validators.required]
     }, { validators: this.utilsService.customPosswordMatchValidator });
     this.counties = locations.states;
-
   }
   public registerUser() {
     if (this.registerForm.valid && this.registerAsUser == true) {
@@ -73,7 +76,10 @@ export class UserLoginComponent implements OnInit {
   public getLogin() {
     this.userService.getLogin({ email: this.loginForm.controls["email"].value, password: this.loginForm.controls["password"].value }).subscribe(res => {
       this.localStorageService.setToken(res.token);
-      this.router.navigateByUrl("/home");
+      this.localStorageService.setUserType(res.userType);
+      this.localStorageService.setUser(res.user);
+      console.log(res.user)
+      this.router.navigateByUrl(this.utilsService.redirectAccordingToRole(res.userType));
     })
   }
 
