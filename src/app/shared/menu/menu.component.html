@@ -2,8 +2,15 @@
     <button class="menu-btn" [ngClass]="{'active': active==0}"> About us</button>
     <button class="menu-btn" [ngClass]="{'active': active==1}"> Contact</button>
     <button class="menu-btn" [ngClass]="{'active': active==2}"> Clinics</button>
-    <div class="login-btn-wrapper">
+    <div class="login-btn-wrapper" *ngIf="!user">
         <button class="login-btn default-btn" routerLink="/login"> Sign in</button>
         <button class="register" routerLink="/login">Sing up</button>
     </div>
+    <div class="menu-trigger" *ngIf="user" [matMenuTriggerFor]="menu">
+        {{user.name ? user.name : user.firstName + ' ' + user.lastName}}</div>
+    <mat-menu #menu>
+
+        <button mat-menu-item (click)="logout()"> Log out</button>
+
+    </mat-menu>
 </div>

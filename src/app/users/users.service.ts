@@ -25,4 +25,9 @@ export class UsersService {
   public getLogin(userLoginReq): Observable<any> {
     return this.http.post(environment.apiEndpoint + '/auth', userLoginReq, { responseType: 'json' });
   }
+
+  public getLogout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
 }

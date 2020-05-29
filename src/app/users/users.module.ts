@@ -1,7 +1,5 @@
-
 import { NgModule } from '@angular/core';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { UsersService } from './users.service';
@@ -9,8 +7,7 @@ import { UsersService } from './users.service';
 
 @NgModule({
     declarations: [
-        UserLoginComponent,
-        UserProfileComponent
+        UserLoginComponent
     ],
     imports: [
         UsersRoutingModule,

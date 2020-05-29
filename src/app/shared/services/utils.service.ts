@@ -12,4 +12,22 @@ export class UtilsService {
         return match ? null : { 'unmatch': true }
 
     }
+
+    public redirectAccordingToRole(userType: string): string {
+        let route: string = '';
+        switch (userType) {
+            case 'patient':
+                route = '/home';
+                break;
+            case 'clinic':
+                route = '/clinic/profile';
+                break;
+            case 'doctor':
+                route = '/doctor/profile';
+            default:
+                route = '/home';
+                break;
+        }
+        return route;
+    }
 }
