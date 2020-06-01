@@ -13,11 +13,15 @@ import { ClinicListItemComponent } from './clinic-list-item/clinic-list-item.com
 import { MatDividerModule } from '@angular/material/divider'
 import { UsersService } from '../users/users.service';
 import { MatMenuModule } from '@angular/material/menu';
+import { SideNavComponent } from './side-nav/side-nav.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
 @NgModule({
-  declarations: [MenuComponent, ClinicListItemComponent],
+  declarations: [MenuComponent, ClinicListItemComponent, SideNavComponent, CalendarComponent],
   exports: [
     CommonModule,
     MatInputModule,
@@ -30,7 +34,12 @@ import { MatMenuModule } from '@angular/material/menu';
     MenuComponent,
     ClinicListItemComponent,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    SideNavComponent,
+    CalendarComponent,
+    FontAwesomeModule,
+    MatExpansionModule
+
   ],
   providers: [UsersService]
 })

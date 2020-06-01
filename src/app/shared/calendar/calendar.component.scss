@@ -1,0 +1,82 @@
+@import "../../../styles/variables.scss";
+
+.calendar-wrapper {
+  background-color: white;
+  border-radius: 10px;
+  max-width: 800px;
+  padding: 20px;
+  width: 100%;
+  .year {
+    color: lightgray;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+  }
+  .month {
+    color: $default-btn-background;
+    display: flex;
+    justify-content: space-around;
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 800px;
+    .header {
+      border-bottom: 1px solid blue;
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+      padding: 20px 0 10px 0;
+      width: 100%;
+      div {
+        text-align: center;
+        width: calc(100% / 7 - 16px);
+      }
+    }
+    .day {
+      background-color: lighten(lightgray, 10%);
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(100% / 7 - 16px);
+      border: 1px solid lightgray;
+      height: 100px;
+      padding: 10px;
+      position: relative;
+      margin: 6px;
+
+      &:hover {
+        border: 2px solid blue;
+      }
+      .day-nr {
+        color: gray;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+      }
+      .appointments {
+        color: blue;
+        font-weight: 800;
+        text-align: center;
+        span {
+          font-weight: 300;
+          font-size: 12px;
+        }
+      }
+    }
+    .active {
+      border: 2px solid blue;
+    }
+    .today {
+      border: 2px solid rgba(red, 0.3);
+    }
+  }
+}

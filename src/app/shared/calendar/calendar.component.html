@@ -1,0 +1,26 @@
+<div class="calendar-wrapper">
+  <div class="year">{{currentDate.getFullYear()}}</div>
+  <div class="month">
+    <button (click)="onPrevious()">
+      <fa-icon [icon]="leftArrow" size="2x"></fa-icon>
+    </button>
+    <h1>{{months[currentDate.getMonth()]}}</h1>
+    <button (click)="onNext()">
+      <fa-icon [icon]="rightArrow" size="2x"></fa-icon>
+    </button>
+  </div>
+
+  <div class="days">
+    <div class="header">
+      <div *ngFor="let day of weekdays">{{day}}</div>
+    </div>
+    <div class="day" *ngFor="let day of calendarDays" (click)="onClickDay(day? day.date : null)" [ngClass]="{'active': day ? clickedDay == day.date && clickedDay!= null : false ,
+       'today': day? compareDates(day.date,today) : false }">
+      <span class="day-nr">{{day ? day.date.getDate() : ''}} </span>
+      <div class="appointments">
+        {{day && day.nrOfAppointments > 0 ? day.nrOfAppointments: ''}}
+        <span>{{ day && day.nrOfAppointments == 1 ? 'appointment' : (day && day.nrOfAppointments > 1 ? 'appointments': '')}}</span>
+      </div>
+    </div>
+  </div>
+</div>

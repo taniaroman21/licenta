@@ -6,11 +6,15 @@
         <button class="login-btn default-btn" routerLink="/login"> Sign in</button>
         <button class="register" routerLink="/login">Sing up</button>
     </div>
-    <div class="menu-trigger" *ngIf="user" [matMenuTriggerFor]="menu">
-        {{user.name ? user.name : user.firstName + ' ' + user.lastName}}</div>
-    <mat-menu #menu>
-
-        <button mat-menu-item (click)="logout()"> Log out</button>
-
-    </mat-menu>
+    <div class="profile">
+        <div class="profile-img" [matMenuTriggerFor]="menu">
+            <img [src]="user.profileImage">
+        </div>
+        <div class="menu-trigger" *ngIf="user" [matMenuTriggerFor]="menu">
+            {{user.name ? user.name : user.firstName + ' ' + user.lastName}}</div>
+        <mat-menu #menu>
+            <button mat-menu-item (click)="logout()"> Log out</button>
+            <button mat-menu-item [routerLink]="profileRoute">My profile</button>
+        </mat-menu>
+    </div>
 </div>

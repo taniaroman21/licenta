@@ -1,0 +1,4 @@
+<div class="side-nav-wrapper">
+  <button *ngFor="let button of buttons; let  i = index" (click)="changeActive(i)"
+    [ngClass]="{'active': activeButtons[i]}">{{button}}</button>
+</div>

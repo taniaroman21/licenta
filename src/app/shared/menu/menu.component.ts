@@ -10,11 +10,19 @@ import { UsersService } from 'src/app/users/users.service';
 export class MenuComponent implements OnInit {
   @Input('active') active: number;
   public user: any;
+  public profileRoute: string;
 
   constructor(public localStorageService: LocalStorageService, public userService: UsersService) { }
 
   ngOnInit(): void {
     this.user = this.localStorageService.getUser();
+
+    if (this.localStorageService.getUserType() == 'clinic') {
+      this.profileRoute = `/clinic/profile/${this.user._id}`;
+    }
+    else {
+      this.profileRoute = `/patient/profile/${this.user._id}`;
+    }
   }
 
   public logout(): void {
