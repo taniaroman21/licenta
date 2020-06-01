@@ -13,17 +13,17 @@ export class UtilsService {
 
     }
 
-    public redirectAccordingToRole(userType: string): string {
+    public redirectAccordingToRole(userType: string, userId: string): string {
         let route: string = '';
         switch (userType) {
             case 'patient':
                 route = '/home';
                 break;
             case 'clinic':
-                route = '/clinic/profile';
+                route = `/clinic/profile/${userId}`;
                 break;
             case 'doctor':
-                route = '/doctor/profile';
+                route = `/doctor/profile/${userId}`;
             default:
                 route = '/home';
                 break;

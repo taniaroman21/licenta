@@ -3,6 +3,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ClinicsService } from './clinics.service';
 import { ClinicProfileComponent } from './clinic-profile/clinic-profile.component';
 import { ClinicsRoutingModule } from './clinics-routing.module';
+import { AppoinmentService } from '../shared/services/appoinment.service';
 
 
 
@@ -15,6 +16,6 @@ import { ClinicsRoutingModule } from './clinics-routing.module';
   exports: [
 
   ],
-  providers: [ClinicsService]
+  providers: [ClinicsService, AppoinmentService]
 })
 export class ClinicsModule { }

@@ -79,7 +79,7 @@ export class UserLoginComponent implements OnInit {
       this.localStorageService.setUserType(res.userType);
       this.localStorageService.setUser(res.user);
       console.log(res.user)
-      this.router.navigateByUrl(this.utilsService.redirectAccordingToRole(res.userType));
+      this.router.navigateByUrl(this.utilsService.redirectAccordingToRole(res.userType, res.user._id));
     })
   }
 
