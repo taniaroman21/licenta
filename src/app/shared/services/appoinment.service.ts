@@ -24,8 +24,8 @@ export class AppoinmentService {
     return this.http.get(environment.apiEndpoint + '/appointments/clinic/' + clinicId + '/?date=' + (date ? date : ''), { headers: this.headers });
   }
 
-  public getPatientAppointments(patientId: string): Observable<any> {
-    return this.http.get(environment.apiEndpoint + '/appointments/patient/' + patientId, { headers: this.headers });
+  public getPatientAppointments(patientId: string, date?: Date): Observable<any> {
+    return this.http.get(environment.apiEndpoint + '/appointments/patient/' + patientId + '/?date=' + (date ? date : ''), { headers: this.headers });
   }
 
 }

@@ -1,0 +1,60 @@
+@import "../../../styles/variables.scss";
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .search-input {
+    display: block;
+    margin: 32px auto;
+    position: relative;
+    width: 30%;
+    .icon {
+      color: gray;
+      position: absolute;
+      right: 0;
+    }
+  }
+  .doctor-list {
+    width: 60%;
+    margin: 32px auto;
+    .doctor {
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border-left: 0 solid $default-btn-background;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      margin: 16px auto;
+      padding: 24px;
+      transition: all 0.2s;
+      width: 100%;
+      &:hover {
+        border-left: 8px solid $default-btn-background;
+        transform: scale(1.02);
+      }
+      .clinics {
+        span {
+          color: #7382bf;
+        }
+        .clinic {
+          cursor: pointer;
+          &:hover {
+            border-bottom: 1px solid #7382bf;
+          }
+        }
+      }
+      .profile-image {
+        border-radius: 100%;
+        cursor: pointer;
+        margin-right: 32px;
+        width: 64px;
+        height: 64px;
+        overflow: hidden;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

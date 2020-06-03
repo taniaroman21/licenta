@@ -1,0 +1,28 @@
+.app-calendar {
+  margin-left: 100px;
+  width: 70%;
+}
+
+.appointments {
+  width: 100%;
+  max-width: 800px;
+  .appointment {
+    border-bottom: 1px solid lightgray;
+    margin: 10px 0 10px 0;
+    div {
+      padding: 10px 0 10px 0;
+      span {
+        color: blue;
+        display: inline-block;
+        margin-right: 145px;
+        width: 100px;
+      }
+    }
+  }
+}
+.section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 32px 100px;
+}

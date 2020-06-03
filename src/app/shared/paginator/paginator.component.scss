@@ -1,0 +1,29 @@
+@import "../../../styles/variables.scss";
+.navigation {
+  display: flex;
+  float: right;
+  margin: 20px 0;
+  button {
+    border: 1px solid $default-btn-background;
+    border-radius: 100%;
+    color: $default-btn-background;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 18px;
+    margin: 0 6px;
+    padding: 6px 12px;
+    width: auto;
+    &:first-of-type,
+    &:last-of-type {
+      border: none;
+      background: transparent;
+    }
+  }
+  .active {
+    background-color: $default-btn-background;
+    color: white;
+  }
+}
+.mat-paginator {
+  display: none;
+}

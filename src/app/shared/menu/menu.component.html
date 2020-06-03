@@ -1,12 +1,12 @@
 <div class='menu-wrapper'>
-    <button class="menu-btn" [ngClass]="{'active': active==0}"> About us</button>
-    <button class="menu-btn" [ngClass]="{'active': active==1}"> Contact</button>
-    <button class="menu-btn" [ngClass]="{'active': active==2}"> Clinics</button>
+    <button class="menu-btn" [ngClass]="{'active': active==0}" routerLink="/home"> Clinics</button>
+    <button class="menu-btn" [ngClass]="{'active': active==1}" routerLink="/doctors"> Doctors</button>
+    <button class="menu-btn" [ngClass]="{'active': active==2}"> </button>
     <div class="login-btn-wrapper" *ngIf="!user">
         <button class="login-btn default-btn" routerLink="/login"> Sign in</button>
         <button class="register" routerLink="/login">Sing up</button>
     </div>
-    <div class="profile">
+    <div class="profile" *ngIf="user">
         <div class="profile-img" [matMenuTriggerFor]="menu">
             <img [src]="user.profileImage">
         </div>

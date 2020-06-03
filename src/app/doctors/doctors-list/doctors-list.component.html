@@ -1,0 +1,27 @@
+<app-menu [active]="1"></app-menu>
+<div class="page-wrapper">
+  <mat-form-field class="search-input">
+    <input matInput type="text" (change)="searchDoctor($event)">
+    <fa-icon class="icon" [icon]="faSearch"></fa-icon>
+  </mat-form-field>
+
+
+  <div class="doctor-list">
+    <div class="doctor" *ngFor="let doctor of doctors">
+      <div class="profile-image" [routerLink]="['/doctors/profile/' + doctor._id]">
+        <img [src]="doctor.profileImage" alt="profile">
+      </div>
+      <div class="info">
+        <div>{{doctor.email}}</div>
+        <div>{{doctor.firstName + ' ' + doctor.lastName}}</div>
+      </div>
+      <div class="clinics">
+        <span>Works at:</span>
+        <div class="clinic" *ngFor="let clinic of doctor.clinics" [routerLink]="['/clinic/profile/' + clinic.id]">
+          {{clinic.name}}</div>
+      </div>
+    </div>
+  </div>
+  <app-paginator [length]="totalItems" [pageSize]="pageSize" (onPageChange)="changePage($event)"></app-paginator>
+
+</div>

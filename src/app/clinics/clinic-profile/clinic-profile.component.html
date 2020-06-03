@@ -1,24 +1,35 @@
 <app-menu [active]="0"></app-menu>
 <app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
 <div class="content">
-  <div *ngIf="activeButtons[0]">
+  <div *ngIf="activeButtons[0]" class="section">
     <div *ngIf="clinic"> {{clinic.name}}</div>
     <button (click)="updateClinic()">Edit</button>
   </div>
-  <div *ngIf="activeButtons[1]">
 
 
-    <button>
-      <fa-icon [icon]="plus"></fa-icon> Add doctor
+  <div *ngIf="activeButtons[1]" class="section">
+
+    <button class="add-doctor-btn" *ngIf="clinic._id == currentUserId" (click)="openDialog()">
+      <fa-icon [icon]="faPlus"></fa-icon> Add doctor
     </button>
     <div class="doctors">
       <div class="field-buttons">
-        <button *ngFor="let field of clinic.fields">{{field}}</button>
+        <button *ngFor="let field of clinic.fields; let i = index" (click)="toggleField(i, field)"
+          [ngClass]="{'active': doctorFields[i]}">{{field}}</button>
+        <button (click)="toggleField(doctorFields.length - 1)"
+          [ngClass]="{'active': doctorFields[doctorFields.length - 1]}">
+          All
+        </button>
       </div>
-      <div class="doctor-list">
-        <div class="doctor" *ngFor="let doctor of doctors">
-          <div class="doctor-details" *ngIf="doctor.field == field">
-            {{doctor.email}}
+      <div class="doctors-panel">
+        <div *ngFor="let doctor of filteredDoctors" class="doctor">
+          <div class="profile-img" [routerLink]="['/doctor/profile/' + doctor._id]">
+            <img [src]="doctor.profileImage">
+          </div>
+          <div class="text">
+            <div><span>Email: </span>{{doctor.email}}</div>
+            <div><span>Name: </span>{{doctor.firstName + ' ' + doctor.lastName}}</div>
+            <div><span>Phone: </span>{{doctor.phone}}</div>
           </div>
         </div>
       </div>
@@ -27,10 +38,7 @@
   </div>
 
 
-
-
-
-  <div *ngIf="activeButtons[2]">
+  <div *ngIf="activeButtons[2]" class="section">
     <div class="app-calendar">
       <app-calendar [appointments]="appointments" (clickDay)="clickCalendar($event)"></app-calendar>
       <mat-accordion *ngIf="selectedDateAppointments && selectedDateAppointments.length > 0 ">
