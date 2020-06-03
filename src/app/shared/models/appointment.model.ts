@@ -17,3 +17,9 @@ export interface AppointmentDisplayModel {
   hour: string;
   type: string;
 }
+
+export interface AppointmentShortModel {
+  clinic: { name: string, id: string };
+  doctor: { name: string, id: string };
+  date: Date;
+}

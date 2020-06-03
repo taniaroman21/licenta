@@ -1,7 +1,7 @@
 @import "../../../styles/variables.scss";
 
 .side-nav-wrapper {
-  background-color: white;
+  background: rgba($default-background, 0.02);
   float: right;
   height: 100vh;
   width: 200px;

@@ -1,12 +1,9 @@
 <!-- <header><app-menu></app-menu></header> -->
 <app-menu [active]="0"></app-menu>
 <div class="container">
-    <div class="header">
-        <img src=".\assets\header.jpg">
-        <h1>MedCare</h1>
-    </div>
+
     <div class="clinic-list">
-        <div class="clinic" *ngFor="let clinic of clinics">
+        <div class="clinic" *ngFor="let clinic of clinics" [routerLink]="['/clinic/profile/'+ clinic._id]">
             <app-clinic-list-item [clinic]="clinic"></app-clinic-list-item>
         </div>
     </div>

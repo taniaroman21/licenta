@@ -17,11 +17,18 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ModalComponent } from './modal/modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { PagerService } from './services/pager.service';
 
 
 
 @NgModule({
-  declarations: [MenuComponent, ClinicListItemComponent, SideNavComponent, CalendarComponent],
+  declarations: [MenuComponent, ClinicListItemComponent, SideNavComponent, CalendarComponent, ModalComponent, PaginatorComponent],
   exports: [
     CommonModule,
     MatInputModule,
@@ -38,9 +45,16 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SideNavComponent,
     CalendarComponent,
     FontAwesomeModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule,
+    ModalComponent,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatPaginatorModule,
+    PaginatorComponent
 
   ],
-  providers: [UsersService]
+  providers: [UsersService, PagerService]
 })
 export class SharedModule { }

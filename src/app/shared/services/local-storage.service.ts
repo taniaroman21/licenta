@@ -22,10 +22,10 @@ export class LocalStorageService {
     return localStorage.getItem('userType');
   }
 
-  public getUser(): UserRegisterModel {
+  public getUser(): any {
     return JSON.parse(localStorage.getItem('user'));
   }
-  public setUser(user: UserRegisterModel): void {
+  public setUser(user: any): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
 }

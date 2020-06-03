@@ -4,7 +4,8 @@
 @import "./material-style.scss";
 body {
   // background: linear-gradient(#ebefff, #b3c2ff);
-  background: rgba($default-background, 0.1);
+  // background: rgba($default-background, 0.02);
+  background-color: white;
   margin: 0;
 }
 * {

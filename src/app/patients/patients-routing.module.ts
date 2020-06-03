@@ -4,7 +4,7 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 
 const routes: Routes = [
   {
-    path: 'profile',
+    path: 'profile/:id',
     component: PatientProfileComponent
   }
 ];

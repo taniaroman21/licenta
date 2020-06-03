@@ -1,0 +1,12 @@
+<mat-paginator [pageSize]="10" #paginator></mat-paginator>
+
+<div class="navigation">
+  <button class="arrow" (click)="handlePage(paginator.pageIndex-1)">
+    <fa-icon [icon]="chevronLeft"></fa-icon>
+  </button>
+  <button [ngClass]="{'active': paginator.pageIndex == page-1 }" *ngFor="let page of pages"
+    (click)="handlePage(page-1)"> {{page}}</button>
+  <button class="arrow" (click)="handlePage(paginator.pageIndex+1)">
+    <fa-icon [icon]="chevronRight"></fa-icon>
+  </button>
+</div>

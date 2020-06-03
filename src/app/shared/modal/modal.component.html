@@ -1,0 +1,88 @@
+<div class="modal-wrapper">
+  <h2 mat-dialog-title>{{ type == 'addDoctor' ? 'Add doctor': ''}}</h2>
+  <mat-divider></mat-divider>
+  <mat-dialog-content>
+    <div class="add-doctor" *ngIf="type == 'addAppointment'">
+      <form [formGroup]="AppointmentForm">
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Type of Appointment
+          </mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="Consultatie">Consultatie</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Hour
+          </mat-label>
+          <mat-select formControlName="hour">
+            <mat-option *ngFor="let hour of data.workingHours" [value]="hour">
+              {{hour}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Field
+          </mat-label>
+          <mat-select formControlName="field" (selectionChange)="changeField($event)">
+            <mat-option *ngFor="let field of data.clinic.fields" [value]="field">
+              {{field}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Available doctors on the selected date
+          </mat-label>
+          <mat-select formControlName="doctorId">
+            <mat-option *ngFor="let doctor of filteredDoctors" [value]="doctor._id">
+              {{doctor.firstName + ' ' + doctor.lastName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="add-doctor" *ngIf="type == 'addDoctor'">
+      <form [formGroup]="addDoctorForm">
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Email
+          </mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="off"
+            placeholder="Please enter a valid email address...">
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            First Name
+          </mat-label>
+          <input matInput type="text" formControlName="firstName" autocomplete="off"
+            placeholder="Please enter your first name and middle names if existent...">
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Last Name
+          </mat-label>
+          <input matInput type="text" formControlName="lastName" autocomplete="off"
+            placeholder="Please enter your last name...">
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Password
+          </mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Please enter a solid password...">
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <mat-label>
+            Field
+          </mat-label>
+          <input matInput type="text" formControlName="field" placeholder="Please enter a field...">
+        </mat-form-field>
+      </form>
+
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions> <button mat-dialog-close class="close">Close</button>
+    <button class="submit" (click)="onSubmit()">Submit</button></mat-dialog-actions>
+</div>

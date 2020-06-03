@@ -1,1 +1,25 @@
 <app-menu></app-menu>
+<app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
+<div *ngIf="activeButtons[1]" class="section">
+  <div class="app-calendar">
+    <app-calendar [appointments]="appointments" (clickDay)="clickCalendar($event)"></app-calendar>
+    <mat-accordion *ngIf="selectedDateAppointments && selectedDateAppointments.length > 0 ">
+      <mat-expansion-panel class="appointments" *ngFor="let hour of hours">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{hour}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{countAppointments(hour,selectedDateAppointments) > 0 ? (countAppointments(hour,selectedDateAppointments) + ' appointments'): ''}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let app of selectedDateAppointments">
+          <div class="appointment" *ngIf="app.hour == hour">
+            <div><span>Doctor: </span>{{app.doctor.name}}</div>
+            <div><span>Clinic: </span>{{app.clinic.name}}</div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
