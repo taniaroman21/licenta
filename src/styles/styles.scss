@@ -10,6 +10,7 @@ body {
 }
 * {
   box-sizing: border-box;
+  font-family: "Circular Std", sans-serif;
 }
 button {
   outline: none;
@@ -35,4 +36,29 @@ button {
 }
 ::placeholder {
   font-size: 10px;
+}
+.green-snack-bar {
+  background-color: rgba(#00d912, 0.7);
+  box-shadow: none;
+  color: white;
+  width: 70vw;
+  max-width: 1000px !important;
+}
+.red-snack-bar {
+  background-color: rgba(red, 0.7);
+  box-shadow: none;
+  color: white;
+  width: 70vw;
+  max-width: 1000px !important;
+}
+.mat-simple-snackbar {
+  font-size: 16px;
+  button {
+    color: white;
+  }
+}
+.phoneFormField {
+  .mat-form-field-infix {
+    padding: 0;
+  }
 }

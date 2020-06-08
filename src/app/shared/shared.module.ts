@@ -4,8 +4,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +24,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PagerService } from './services/pager.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -52,7 +53,9 @@ import { PagerService } from './services/pager.service';
     MatNativeDateModule,
     MatRippleModule,
     MatPaginatorModule,
-    PaginatorComponent
+    PaginatorComponent,
+    FormsModule,
+    MatSnackBarModule
 
   ],
   providers: [UsersService, PagerService]

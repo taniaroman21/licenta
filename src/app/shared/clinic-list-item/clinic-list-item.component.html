@@ -4,8 +4,7 @@
             <mat-card-title>
                 {{clinic.name}}
             </mat-card-title>
-            <img mat-card-avatar
-                src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_weight_other/1800x1200_cat_weight_other.jpg?resize=600px:*">
+            <img mat-card-avatar [src]="clinic.profileImage">
             <mat-card-subtitle>
                 {{clinic.name}}
             </mat-card-subtitle>
@@ -17,6 +16,11 @@
 
 
     <mat-card-content>
+        <div class="stars">
+            <fa-icon [icon]="faStar" size="2x"></fa-icon>
+            <span> {{clinic.reviews.stars}}</span>
+            <div> Reviewed by {{clinic.reviews.totalReviews}}</div>
+        </div>
         <p>{{clinic.city.name}}, {{clinic.county.name}}</p>
     </mat-card-content>
 

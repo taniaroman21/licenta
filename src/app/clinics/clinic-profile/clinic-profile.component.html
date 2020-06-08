@@ -1,9 +1,89 @@
-<app-menu [active]="0"></app-menu>
+<app-menu></app-menu>
 <app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
 <div class="content">
-  <div *ngIf="activeButtons[0]" class="section">
-    <div *ngIf="clinic"> {{clinic.name}}</div>
-    <button (click)="updateClinic()">Edit</button>
+  <div *ngIf="activeButtons[0] && clinic" class="section">
+    <div class="header-details">
+      <input #fileInput id="file-input" type="file" (change)="changeProfile($event)" />
+      <div class="profile-img" (click)="openFileDialog()" [ngClass]="{'hoverable': currentUserId == clinic._id}">
+        <img [src]="clinic.profileImage">
+      </div>
+      <div id="name"> {{clinic.name}}
+        <div>Member since: <span>{{formatDate(clinic.dateCreated)}}</span></div>
+      </div>
+      <div class="stars">
+        <fa-icon [icon]="faStar" size="2x"></fa-icon>
+        <span> {{clinic.reviews.stars}}</span>
+        <div> Reviewed by {{clinic.reviews.totalReviews}}</div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="description border-bottom">
+        About this clinic:
+        <div *ngIf="!isUpdating">{{clinic.description}}
+          <span class="empty" *ngIf="!clinic.description"> This clinic has no description yet.</span>
+        </div>
+        <div *ngIf="isUpdating">
+          <mat-form-field appearance="outline">
+            <textarea matInput rows="5" [formControl]="descriptionControl"></textarea>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="fields border-bottom">
+        Active fields:
+        <span *ngFor="let field of clinic.fields">{{field}}</span>
+      </div>
+      <div class="contact  border-bottom">
+        Contact:
+        <div class="contact-block">
+          <div>Email: {{clinic.email}}</div>
+          <div *ngIf="!isUpdating"> Number: {{clinic.number}} <span class="empty" *ngIf="!clinic.number">No number added
+              yet</span></div>
+          <div *ngIf="isUpdating"> Number:
+            <mat-form-field appearance="outline" class="phoneFormField">
+              <input matInput type="number" [formControl]="numberControl">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="working-hours border-bottom">
+        Schedule:
+        <div *ngIf="!isUpdating">
+          <span>{{clinic.workingHours[0]}}</span>
+          -
+          <span>{{clinic.workingHours[1]}}</span>
+        </div>
+        <div *ngIf="!isUpdating">
+          <span>{{clinic.workingDays[0]}}</span>
+          -
+          <span>{{clinic.workingDays[1]}}</span>
+        </div>
+        <div *ngIf="isUpdating" class="hours">
+          <mat-form-field appearance="outline">
+            <input matInput type="text" pattern="^[0-9]+$" maxlength="2" [formControl]="startHourControl">
+          </mat-form-field> -
+          <mat-form-field appearance="outline">
+            <input matInput type="text" pattern="^[0-9]+$" maxlength="2" [formControl]="endHourControl">
+          </mat-form-field>
+        </div>
+        <div *ngIf="isUpdating">
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="startDayControl">
+              <mat-option *ngFor="let day of moment.weekdays()" [value]="day">{{day}}</mat-option>
+            </mat-select>
+          </mat-form-field> -
+          <mat-form-field appearance="outline">
+            <mat-select [formControl]="endDayControl">
+              <mat-option *ngFor="let day of moment.weekdays()" [value]="day">{{day}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+
+    <button id="edit" *ngIf="clinic._id == currentUserId && !isUpdating" (click)="onEditClick()">Edit</button>
+    <button id="submit" *ngIf="isUpdating" (click)="updateClinic()"> Save</button>
   </div>
 
 
@@ -22,8 +102,9 @@
         </button>
       </div>
       <div class="doctors-panel">
+        <div *ngIf="!doctors || doctors.length == 0">No doctor added yet.</div>
         <div *ngFor="let doctor of filteredDoctors" class="doctor">
-          <div class="profile-img" [routerLink]="['/doctor/profile/' + doctor._id]">
+          <div class="profile-img" [routerLink]="['/doctors/profile/' + doctor._id]">
             <img [src]="doctor.profileImage">
           </div>
           <div class="text">
@@ -39,6 +120,7 @@
 
 
   <div *ngIf="activeButtons[2]" class="section">
+    <h2 *ngIf="currentUserType == 'patient'">Make an appointment</h2>
     <div class="app-calendar">
       <app-calendar [appointments]="appointments" (clickDay)="clickCalendar($event)"></app-calendar>
       <mat-accordion *ngIf="selectedDateAppointments && selectedDateAppointments.length > 0 ">
@@ -62,5 +144,38 @@
         </mat-expansion-panel>
       </mat-accordion>
     </div>
+  </div>
+
+  <div *ngIf="activeButtons[3]" class="section">
+    <div class="leave-review" [ngClass]="{'disabled': !isAllowedToReview}">
+      <h3 *ngIf="isAllowedToReview">Leave a review</h3>
+      <h3 *ngIf="!isAllowedToReview && currentUserId != clinic._id">You can't leave a review unless you've had an
+        appointment with this clinic.</h3>
+      <h3 *ngIf="currentUserId == clinic._id">You can't review your own clinic.</h3>
+      <div class="stars" (mouseleave)="addReviewStars.hovered = 0">
+        <fa-icon [icon]="star"
+          *ngFor="let star of countStars( !addReviewStars.set ? addReviewStars.hovered : addReviewStars.set); let i = index"
+          (mouseover)="addReviewStars.hovered = i + 1" (click)="addReviewStars.set = i + 1"></fa-icon>
+      </div>
+      <mat-form-field>
+        <mat-label>
+          Description
+        </mat-label>
+        <textarea matInput name="description" [(ngModel)]="reviewText" #ctrl="ngModel"
+          [disabled]="!isAllowedToReview"></textarea>
+      </mat-form-field>
+      <button (click)="submitReview()" [disabled]="!isAllowedToReview">Submit Review</button>
+    </div>
+    <div class="reviews">
+      <div class="review" *ngFor="let review of reviews">
+        <div class="stars">
+          <fa-icon [icon]="star" *ngFor="let star of countStars(review.stars)"></fa-icon>
+        </div>
+        <div class="date">{{formatDate(review.dateCreated)}} <span>{{review.user.name}}</span> </div>
+        <div class="description"> {{review.description}}</div>
+      </div>
+    </div>
+    <app-paginator [length]="totalItems" [pageSize]="reviewPageSize" (onPageChange)="changePage($event)">
+    </app-paginator>
   </div>
 </div>

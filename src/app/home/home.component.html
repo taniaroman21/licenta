@@ -1,19 +1,15 @@
 <!-- <header><app-menu></app-menu></header> -->
 <app-menu [active]="0"></app-menu>
-<div class="container">
-
+<div class="page-wrapper">
+    <mat-form-field class="search-input">
+        <input matInput type="text" (change)="searchClinic($event)">
+        <fa-icon class="icon" [icon]="faSearch"></fa-icon>
+    </mat-form-field>
     <div class="clinic-list">
         <div class="clinic" *ngFor="let clinic of clinics" [routerLink]="['/clinic/profile/'+ clinic._id]">
             <app-clinic-list-item [clinic]="clinic"></app-clinic-list-item>
         </div>
-    </div>
-    <div class="slide-container">
-        <div class="slide">
-            <img src="">
 
-        </div>
-        <div class="slide">
-
-        </div>
     </div>
+    <app-paginator [length]="totalItems" [pageSize]="pageSize" (onPageChange)="changePage($event)"></app-paginator>
 </div>

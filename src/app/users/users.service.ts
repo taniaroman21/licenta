@@ -27,7 +27,6 @@ export class UsersService {
   }
 
   public getLogout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.clear();
   }
 }

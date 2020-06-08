@@ -9,23 +9,23 @@ export class LocalStorageService {
   constructor() { }
 
   public getToken(): string {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
   public setToken(token: string): void {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   public setUserType(userType: string): void {
-    localStorage.setItem('userType', userType);
+    sessionStorage.setItem('userType', userType);
   }
   public getUserType(): string {
-    return localStorage.getItem('userType');
+    return sessionStorage.getItem('userType');
   }
 
   public getUser(): any {
-    return JSON.parse(localStorage.getItem('user'));
+    return JSON.parse(sessionStorage.getItem('user'));
   }
   public setUser(user: any): void {
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 }

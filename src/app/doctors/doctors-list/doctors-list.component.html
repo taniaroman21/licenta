@@ -5,8 +5,10 @@
     <fa-icon class="icon" [icon]="faSearch"></fa-icon>
   </mat-form-field>
 
-
-  <div class="doctor-list">
+  <div *ngIf="!doctors || doctors.length == 0">
+    There are no doctors to show
+  </div>
+  <div class="doctor-list" *ngIf="doctors">
     <div class="doctor" *ngFor="let doctor of doctors">
       <div class="profile-image" [routerLink]="['/doctors/profile/' + doctor._id]">
         <img [src]="doctor.profileImage" alt="profile">

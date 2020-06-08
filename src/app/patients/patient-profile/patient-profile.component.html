@@ -1,5 +1,35 @@
 <app-menu></app-menu>
 <app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
+<div *ngIf="activeButtons[0] && patient" class="section">
+  <div class="header-details">
+    <input #fileInput id="file-input" type="file" (change)="changeProfile($event)" />
+    <div class="profile-img" (click)="openFileDialog()" [ngClass]="{'hoverable': currentUserId == patient._id}">
+      <img [src]="patient.profileImage">
+    </div>
+    <div id="name"> {{patient.firstName + ' '+ patient.lastName}}
+      <div>Member since: <span>{{formatDate(patient.dateCreated)}}</span></div>
+    </div>
+  </div>
+  <div class="details">
+
+    <div class="contact  border-bottom">
+      Contact:
+      <div class="contact-block">
+        <div>Email: {{patient.email}}</div>
+        <div *ngIf="!isUpdating"> Number: {{patient.phone}} <span class="empty" *ngIf="!patient.phone">No number added
+            yet</span></div>
+        <div *ngIf="isUpdating"> Number:
+          <mat-form-field appearance="outline" class="phoneFormField">
+            <input matInput type="number" [formControl]="numberControl">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="edit" *ngIf="patient._id == currentUserId && !isUpdating" (click)="onEditClick()">Edit</button>
+  <button id="submit" *ngIf="isUpdating" (click)="updatePatient()"> Save</button>
+</div>
+
 <div *ngIf="activeButtons[1]" class="section">
   <div class="app-calendar">
     <app-calendar [appointments]="appointments" (clickDay)="clickCalendar($event)"></app-calendar>
@@ -16,7 +46,13 @@
         <div *ngFor="let app of selectedDateAppointments">
           <div class="appointment" *ngIf="app.hour == hour">
             <div><span>Doctor: </span>{{app.doctor.name}}</div>
-            <div><span>Clinic: </span>{{app.clinic.name}}</div>
+            <div><span>Clinic: </span> <a [routerLink]="['/clinic/profile/' + app.clinic.id]">{{app.clinic.name}}</a>
+            </div>
+            <div *ngIf="app.result">
+              <div> <span>Diagnosis:</span>{{app.result.diagnosis}}</div>
+              <div><span>Prescription: </span>{{app.result.prescription}}</div>
+            </div>
+            <div *ngIf="!app.result"> No results added yet by your doctor.</div>
           </div>
         </div>
       </mat-expansion-panel>

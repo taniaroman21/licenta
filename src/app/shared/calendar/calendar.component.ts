@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { AppointmentModel, AppointmentDisplayModel } from '../models/appointment.model';
 import * as moment from 'moment';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +9,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnChanges {
   @Input('appointments') appointments: AppointmentDisplayModel[];
   @Output('clickDay') clickDay = new EventEmitter<Date>();
   public weekdays: string[];
@@ -40,8 +40,12 @@ export class CalendarComponent implements OnInit {
     this.currentDate = this.today;
     this.days = this.daysInMonth(this.currentDate.getMonth(), this.currentDate.getFullYear());
     this.renderDays();
-    console.log(this.appointments);
 
+  }
+  ngOnChanges(): void {
+    if (this.currentMonth) {
+      this.renderDays();
+    }
   }
   public getCurrentMonth(date: Date) {
     this.currentMonth = { index: date.getMonth(), name: this.months[date.getMonth()], firstDay: this.getFirstDay(date.getMonth(), date.getFullYear()) };

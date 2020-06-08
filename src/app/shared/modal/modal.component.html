@@ -1,9 +1,10 @@
 <div class="modal-wrapper">
-  <h2 mat-dialog-title>{{ type == 'addDoctor' ? 'Add doctor': ''}}</h2>
+  <h2 mat-dialog-title>
+    {{ type == 'addDoctor' ? 'Add doctor': (type == 'addAppointment' ? 'Add appointment': 'Add result')}}</h2>
   <mat-divider></mat-divider>
   <mat-dialog-content>
     <div class="add-doctor" *ngIf="type == 'addAppointment'">
-      <form [formGroup]="AppointmentForm">
+      <form [formGroup]="appointmentForm">
         <mat-form-field floatLabel="always">
           <mat-label>
             Type of Appointment
@@ -51,7 +52,7 @@
             Email
           </mat-label>
           <input matInput type="email" formControlName="email" autocomplete="off"
-            placeholder="Please enter a valid email address...">
+            placeholder="Please enter a valid email address..." (blur)="findDoctor($event)">
         </mat-form-field>
         <mat-form-field floatLabel="always">
           <mat-label>
@@ -73,14 +74,47 @@
           </mat-label>
           <input matInput type="password" formControlName="password" placeholder="Please enter a solid password...">
         </mat-form-field>
-        <mat-form-field floatLabel="always">
+        <mat-form-field floatLabel="always" *ngIf="!existingDoctor">
           <mat-label>
             Field
           </mat-label>
           <input matInput type="text" formControlName="field" placeholder="Please enter a field...">
         </mat-form-field>
+        <mat-form-field floatLabel="always" *ngIf="existingDoctor">
+          <mat-label>
+            Field
+          </mat-label>
+          <mat-select formControlName="field" placeholder="Please select a field...">
+            <mat-option *ngFor="let field of existingDoctor.fields" [value]="field">{{field}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </form>
-
+    </div>
+    <div class="add-doctor" *ngIf="type == 'addResult' ">
+      <div class="details">
+        <div>
+          <span>Patient: </span>
+          {{data.appointment.user.name}}
+        </div>
+        <div>
+          <span>Date: </span>
+          {{formatDate(data.appointment.date)}}
+        </div>
+        <div>
+          <span>Clinic: </span>
+          {{data.appointment.clinic.name}}
+        </div>
+      </div>
+      <form [formGroup]="resultForm">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Diagnosis</mat-label>
+          <textarea matInput formControlName="diagnosis"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Prescription</mat-label>
+          <textarea matInput formControlName="prescription"></textarea>
+        </mat-form-field>
+      </form>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions> <button mat-dialog-close class="close">Close</button>

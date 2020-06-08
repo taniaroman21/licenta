@@ -1,0 +1,114 @@
+<app-menu></app-menu>
+<app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
+<div class="content">
+  <div *ngIf=" doctor && activeButtons[0]" class="section">
+    <div class="header-details">
+      <input #fileInput id="file-input" type="file" (change)="changeProfile($event)" />
+      <div class="profile-img" (click)="openFileDialog()" [ngClass]="{'hoverable': currentUserId == doctor._id}">
+        <img [src]="doctor.profileImage">
+      </div>
+      <div id="name"> {{doctor.firstName + ' '+ doctor.lastName}}
+        <div>Member since: <span>{{formatDate(doctor.dateCreated)}}</span></div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="fields border-bottom">
+
+        <div *ngIf="!isUpdating" class="field-boxes">
+          Active fields:
+          <span *ngFor="let field of doctor.fields" class="field">{{field}}
+          </span>
+        </div>
+        <div *ngIf="isUpdating" class="field-boxes">
+          Active fields:
+          <span *ngFor="let field of fields; let i = index" class="field">{{field}}
+            <span class="close" (click)="removeField(i)">x</span>
+          </span>
+
+        </div>
+
+        <div *ngIf="isUpdating" class="form-field">
+          <mat-form-field *ngIf="isUpdating" appearance="outline">
+            <input matInput type="text" [formControl]="fieldsControl" (keyup.enter)="addField($event)">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="contact  border-bottom">
+        Contact:
+        <div class="contact-block">
+          <div>Email: {{doctor.email}}</div>
+          <div *ngIf="!isUpdating"> Number: {{doctor.phone}} <span class="empty" *ngIf="!doctor.phone">No number added
+              yet</span></div>
+          <div *ngIf="isUpdating"> Number:
+            <mat-form-field appearance="outline" class="phoneFormField">
+              <input matInput type="number" [formControl]="numberControl">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="clinics  border-bottom">
+        Clinics: <div>
+          <span *ngFor="let clinic of doctor.clinics"
+            [routerLink]="['/clinic/profile/' + clinic.id]">{{clinic.name}}</span>
+        </div>
+      </div>
+    </div>
+    <button id="edit" *ngIf="doctor._id == currentUserId && !isUpdating" (click)="onEditClick()">Edit</button>
+    <button id="submit" *ngIf="isUpdating" (click)="updateDoctor()"> Save</button>
+  </div>
+
+  <div *ngIf="activeButtons[1]" class="section">
+    <h2> My Appointments</h2>
+    <div class="app-calendar">
+      <app-calendar [appointments]="appointments" (clickDay)="clickCalendar($event)"></app-calendar>
+      <mat-accordion *ngIf="selectedDateAppointments && selectedDateAppointments.length > 0 ">
+        <mat-expansion-panel class="appointments" *ngFor="let hour of hours">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{hour}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{countAppointments(hour,selectedDateAppointments) > 0 ? (countAppointments(hour,selectedDateAppointments) + ' appointments'): ''}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngFor="let app of selectedDateAppointments">
+            <div class="appointment" *ngIf="app.hour == hour">
+              <div><span>Date: </span>{{formatDate(app.date)}}</div>
+              <div><span>Patient: </span>{{app.user.name}}</div>
+              <div><span>Clinic: </span>{{app.clinic.name}}</div>
+              <button class="result-btn"
+                (click)="setResult(app)">{{ !app.result ? 'Add result' : 'Change result'}}</button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <div *ngIf="activeButtons[2]" class="section">
+    <div class="patients">
+      <div *ngFor="let patient of patients" class="patient">
+        <div class="img-wrapper">
+          <img [src]="patient.profileImage">
+        </div>
+        <div class="patient-details">
+          <div>{{patient.firstName + ' ' + patient.lastName}}</div>
+          <div>{{patient.phone ? patient.phone : 'No phone number added'}}</div>
+        </div>
+        <button class="see-more"
+          (click)="expandPatient(patient._id)">{{(selectedPatient == patient._id) ? 'See less' : 'See more'}}
+          <fa-icon [icon]="(selectedPatient == patient._id) ? chevronUp : chevronDown"></fa-icon></button>
+        <div *ngIf="selectedPatient == patient._id" class="patient-appointments">
+          <div class="appointment" *ngFor="let appointment of selectedPatientAppointments">
+            {{formatDate(appointment.date)}}
+            <div><span>Diagnosis: </span> {{appointment.result? appointment.result.diagnosis : 'No diagnosis yet'}}
+            </div>
+            <div><span>Prescription: </span>
+              {{appointment.result? appointment.result.prescription : 'No prescription yet'}}
+            </div>
+            <button (click)="setResult(appointment)">{{ !appointment.result ? 'Add result' : 'Change result'}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
