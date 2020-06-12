@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ClinicListItem } from '../../clinics/clinics.model';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-clinic-list-item',
@@ -8,6 +9,7 @@ import { ClinicListItem } from '../../clinics/clinics.model';
 })
 export class ClinicListItemComponent implements OnInit {
   @Input('clinic') clinic: ClinicListItem;
+  faStar = faStar;
   constructor() { }
 
   ngOnInit(): void {

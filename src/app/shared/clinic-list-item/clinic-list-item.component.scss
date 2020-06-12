@@ -1,3 +1,21 @@
 @import "../../../styles/mixins.scss";
 
-@include list-card(180px);
+@include list-card(200px);
+.stars {
+  float: right;
+  color: #ebad02;
+  text-align: center;
+  fa-icon {
+    vertical-align: middle;
+  }
+  span {
+    font-size: 32px;
+    color: #7382bf;
+    vertical-align: middle;
+  }
+  div {
+    color: gray;
+    font-size: 12px;
+    margin-left: auto;
+  }
+}

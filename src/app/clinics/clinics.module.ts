@@ -5,6 +5,7 @@ import { ClinicProfileComponent } from './clinic-profile/clinic-profile.componen
 import { ClinicsRoutingModule } from './clinics-routing.module';
 import { AppoinmentService } from '../shared/services/appoinment.service';
 import { DoctorService } from '../doctors/doctor.service';
+import { ReviewService } from '../shared/services/reviews.service';
 
 
 
@@ -17,6 +18,6 @@ import { DoctorService } from '../doctors/doctor.service';
   exports: [
 
   ],
-  providers: [ClinicsService, AppoinmentService, DoctorService]
+  providers: [ClinicsService, AppoinmentService, DoctorService, ReviewService]
 })
 export class ClinicsModule { }

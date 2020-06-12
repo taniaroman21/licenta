@@ -23,6 +23,9 @@ export class MenuComponent implements OnInit {
       if (this.localStorageService.getUserType() == 'clinic') {
         this.profileRoute = `/clinic/profile/${this.user._id}`;
       }
+      else if (this.localStorageService.getUserType() == 'doctor') {
+        this.profileRoute = `/doctors/profile/${this.user._id}`;
+      }
       else {
         this.profileRoute = `/patient/profile/${this.user._id}`;
       }

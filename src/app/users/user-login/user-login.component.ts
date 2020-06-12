@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { locations } from '../../../assets/locations';
 import * as _ from 'lodash';
 import { UtilsService } from 'src/app/shared/services/utils.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-login',
@@ -26,7 +27,8 @@ export class UserLoginComponent implements OnInit {
     private userService: UsersService,
     public localStorageService: LocalStorageService,
     public router: Router,
-    public utilsService: UtilsService) {
+    public utilsService: UtilsService,
+    public snackBar: MatSnackBar) {
     if (this.localStorageService.getToken()) {
       this.router.navigateByUrl('/home');
       console.log(this.localStorageService.getToken());
@@ -65,6 +67,8 @@ export class UserLoginComponent implements OnInit {
       )
       this.userService.registerUser(user).subscribe(res => {
         this.register = false;
+      }, (error) => {
+        this.openSnackBar(error.error, "error");
       })
     }
     else if (this.registerClinicForm.valid && !this.registerAsUser) {
@@ -80,6 +84,8 @@ export class UserLoginComponent implements OnInit {
       this.localStorageService.setUser(res.user);
       console.log(res.user)
       this.router.navigateByUrl(this.utilsService.redirectAccordingToRole(res.userType, res.user._id));
+    }, (error) => {
+      this.openSnackBar(error.error, "error");
     })
   }
 
@@ -89,6 +95,8 @@ export class UserLoginComponent implements OnInit {
     let county = this.counties.find(county => county.id == id);
     console.log(county)
     if (county) this.cities = county.cities;
-
+  }
+  public openSnackBar(message: string, type: string) {
+    this.snackBar.open(message, "Close", { duration: 2000, panelClass: [type == 'success' ? "green-snack-bar" : "red-snack-bar"] });
   }
 }

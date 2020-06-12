@@ -5,6 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { DoctorsRoutingModule } from './doctors-routing.module';
 import { DoctorsListComponent } from './doctors-list/doctors-list.component';
 import { DoctorService } from './doctor.service';
+import { AppoinmentService } from '../shared/services/appoinment.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 
 
@@ -14,6 +16,6 @@ import { DoctorService } from './doctor.service';
     SharedModule,
     DoctorsRoutingModule
   ],
-  providers: [DoctorService]
+  providers: [DoctorService, AppoinmentService, LocalStorageService]
 })
 export class DoctorModule { }

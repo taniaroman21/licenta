@@ -11,8 +11,11 @@ export interface ClinicListItem {
 }
 
 export interface ClinicUpdateModel {
+    id: string;
     description: string,
-    name: string
+    number: string,
+    workingHours: string[];
+    workingDays: string[];
 }
 
 export interface ClientProfile {

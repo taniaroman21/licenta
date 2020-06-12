@@ -16,8 +16,8 @@ export class ClinicsService {
     })
   }
 
-  public getClinics(): Observable<any> {
-    return this.http.get(environment.apiEndpoint + "/clinics");
+  public getClinics(pageSize?: number, page?: number, filter?: string): Observable<any> {
+    return this.http.get(environment.apiEndpoint + `/clinics?page=${page}&pageSize=${pageSize}&filter=${filter}`);
   }
 
   public getClinic(id: string): Observable<any> {
@@ -25,6 +25,18 @@ export class ClinicsService {
   }
 
   public updateClinic(clinic: ClinicUpdateModel): Observable<any> {
-    return this.http.put(environment.apiEndpoint + "/clinics/update", clinic, { headers: this.headers });
+    return this.http.put(environment.apiEndpoint + "/clinics/update", clinic, {
+      headers: new HttpHeaders({
+        "x-auth-token": this.localStorageService.getToken(),
+      })
+    });
+  }
+  public uploadProfile(file: string, clinicId: string): Observable<any> {
+    console.log(file)
+    return this.http.put(environment.apiEndpoint + "/clinics/upload/" + clinicId, file, {
+      headers: new HttpHeaders({
+        "x-auth-token": this.localStorageService.getToken(),
+      })
+    });
   }
 }

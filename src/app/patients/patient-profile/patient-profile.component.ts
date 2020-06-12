@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { PatientService } from '../patient.service';
 import { AppointmentDisplayModel } from 'src/app/shared/models/appointment.model';
 import { AppoinmentService } from 'src/app/shared/services/appoinment.service';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patient-profile',
@@ -11,18 +13,25 @@ import { AppoinmentService } from 'src/app/shared/services/appoinment.service';
   styleUrls: ['./patient-profile.component.scss']
 })
 export class PatientProfileComponent implements OnInit {
+  public currentUserId: string;
   public sideNavButtons: string[] = ["Details", "My Appointments"];
   public activeButtons: boolean[];
   public patient: any;
   public appointments: AppointmentDisplayModel[];
   public selectedDateAppointments: AppointmentDisplayModel[];
   public hours: string[] = [];
+  public isUpdating: boolean = false;
+  //Update controld
+  public numberControl = new FormControl('');
+
   constructor(public localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     private patientService: PatientService,
-    private appointmentsService: AppoinmentService, ) { }
+    private appointmentsService: AppoinmentService,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.currentUserId = this.localStorageService.getUser() ? this.localStorageService.getUser()._id : undefined;
     this.route.params.subscribe(params => {
       this.patientService.getPatient(params.id).subscribe(patient => {
         this.patient = patient;
@@ -62,6 +71,29 @@ export class PatientProfileComponent implements OnInit {
         counter++;
     });
     return counter;
+  }
+  public formatDate(date: Date) {
+    return new Date(date).toDateString();
+  }
+  public onEditClick(): void {
+    this.isUpdating = true;
+    this.numberControl.setValue(this.patient.phone);
+
+  }
+  public updatePatient() {
+    let updatedDetails = {
+      phone: this.numberControl.value,
+    }
+    this.patientService.updatePatient(updatedDetails, this.patient._id).subscribe(response => {
+      this.patient = response;
+      this.openSnackBar("Profile updated successfuly", "success");
+      this.isUpdating = false;
+    }, (error) => {
+      this.openSnackBar(error.error, "error");
+    });
+  }
+  public openSnackBar(message: string, type: string) {
+    this.snackBar.open(message, "Close", { duration: 2000, panelClass: [type == 'success' ? "green-snack-bar" : "red-snack-bar"] });
   }
 
 
