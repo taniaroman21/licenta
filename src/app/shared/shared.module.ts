@@ -25,6 +25,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PagerService } from './services/pager.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ResourcesService } from './services/resources.service';
+import { UtilsService } from './services/utils.service';
 
 
 
@@ -55,9 +58,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatPaginatorModule,
     PaginatorComponent,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
 
   ],
-  providers: [UsersService, PagerService]
+  providers: [UsersService, PagerService, ResourcesService, UtilsService]
 })
 export class SharedModule { }

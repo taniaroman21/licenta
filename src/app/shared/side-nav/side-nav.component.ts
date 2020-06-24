@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 @Component({
   selector: 'app-side-nav',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit {
-  @Input('buttons') buttons: string[];
+  @Input('buttons') buttons: { text: string, icon: IconDefinition }[];
   @Output('active') active = new EventEmitter<boolean[]>();
   public activeButtons: boolean[];
 

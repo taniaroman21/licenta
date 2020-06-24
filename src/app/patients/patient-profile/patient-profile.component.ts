@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { PatientService } from '../patient.service';
@@ -6,6 +6,10 @@ import { AppointmentDisplayModel } from 'src/app/shared/models/appointment.model
 import { AppoinmentService } from 'src/app/shared/services/appoinment.service';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StaticDataService } from 'src/app/shared/services/static-data.service';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { ResourcesService } from 'src/app/shared/services/resources.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -13,8 +17,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./patient-profile.component.scss']
 })
 export class PatientProfileComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
   public currentUserId: string;
-  public sideNavButtons: string[] = ["Details", "My Appointments"];
+  public sideNavButtons: any[];
   public activeButtons: boolean[];
   public patient: any;
   public appointments: AppointmentDisplayModel[];
@@ -23,16 +28,24 @@ export class PatientProfileComponent implements OnInit {
   public isUpdating: boolean = false;
   //Update controld
   public numberControl = new FormControl('');
+  //icons
+  pencilIcon = faPencilAlt;
+  saveIcon = faSave;
+
+  public showSpinner: boolean = false;
 
   constructor(public localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     private patientService: PatientService,
     private appointmentsService: AppoinmentService,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    public staticDataService: StaticDataService,
+    public resourceService: ResourcesService) { }
 
   ngOnInit(): void {
     this.currentUserId = this.localStorageService.getUser() ? this.localStorageService.getUser()._id : undefined;
     this.route.params.subscribe(params => {
+      this.sideNavButtons = this.staticDataService.getSideNiveItems(params.id, "patient");
       this.patientService.getPatient(params.id).subscribe(patient => {
         this.patient = patient;
         this.appointmentsService.getPatientAppointments(this.patient._id).subscribe(res => {
@@ -94,6 +107,28 @@ export class PatientProfileComponent implements OnInit {
   }
   public openSnackBar(message: string, type: string) {
     this.snackBar.open(message, "Close", { duration: 2000, panelClass: [type == 'success' ? "green-snack-bar" : "red-snack-bar"] });
+  }
+  public openFileDialog() {
+    this.fileInput.nativeElement.click();
+    console.log(this.fileInput)
+  }
+  public changeProfile(event) {
+    this.showSpinner = true;
+    const file = event.target.files[0];
+    this.resourceService.getReader(file, (event) => {
+      let base64 = event.target.result;
+      let imageObject: {
+        file: string | ArrayBuffer, name: string, extension: string
+      } = this.resourceService.getImageObject(file, base64);
+      this.patientService.uploadProfile(imageObject, this.patient._id).subscribe(res => {
+        this.patient = res;
+        this.showSpinner = false;
+        if (this.currentUserId == this.patient._id) this.localStorageService.setUser(res)
+      });
+
+    })
+
+
   }
 
 

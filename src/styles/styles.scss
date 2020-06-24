@@ -11,6 +11,7 @@ body {
 * {
   box-sizing: border-box;
   font-family: "Circular Std", sans-serif;
+  outline: none;
 }
 button {
   outline: none;
@@ -60,5 +61,99 @@ button {
 .phoneFormField {
   .mat-form-field-infix {
     padding: 0;
+  }
+}
+#edit {
+  background: white;
+  border: 1px solid #7382bf;
+  border-radius: 5px;
+  color: #7382bf;
+  cursor: pointer;
+  margin: 32px;
+  padding: 6px 12px;
+  color: #7382bf;
+  fa-icon {
+    margin-right: 8px;
+  }
+}
+#submit {
+  background-color: green;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin: 32px;
+  padding: 6px 12px;
+  fa-icon {
+    margin-right: 8px;
+  }
+}
+.page-wrapper {
+  padding-top: 70px;
+
+  .profile-img {
+    border-radius: 100%;
+    margin-right: 32px;
+    overflow: hidden;
+    .spinner-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 100;
+      background: rgba(white, 0.3);
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+    img {
+      height: 100%;
+      width: auto;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      bottom: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 200%;
+      max-height: 200%;
+    }
+    &.hoverable {
+      position: relative;
+      &:hover::after {
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.7);
+        content: "View";
+        color: rgba(white, 0.8);
+        cursor: pointer;
+        display: flex;
+        font-size: 12px;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        text-align: center;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+      }
+    }
+  }
+  .profile-img-wrapper {
+    position: relative;
+    height: 100%;
+    .upload-btn {
+      position: absolute;
+      bottom: -24px;
+      border: none;
+      background: transparent;
+      color: gray;
+      cursor: pointer;
+      left: 5px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

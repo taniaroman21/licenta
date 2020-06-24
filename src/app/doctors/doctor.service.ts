@@ -53,4 +53,13 @@ export class DoctorService {
       })
     });
   }
+  public uploadProfile(fileInfo: any, id: string): Observable<any> {
+
+    return this.http.put(environment.apiEndpoint + `/doctors/${id}/upload/`, fileInfo, {
+      headers: new HttpHeaders({
+        "x-auth-token": this.localStorageService.getToken(),
+        // 'Content-Type': 'multipart/form-data'
+      }),
+    });
+  }
 }

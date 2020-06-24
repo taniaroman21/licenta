@@ -1,11 +1,15 @@
 <app-menu></app-menu>
-<app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
-<div class="content">
+<div class="page-wrapper">
+  <app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
+
   <div *ngIf=" doctor && activeButtons[0]" class="section">
     <div class="header-details">
       <input #fileInput id="file-input" type="file" (change)="changeProfile($event)" />
       <div class="profile-img" (click)="openFileDialog()" [ngClass]="{'hoverable': currentUserId == doctor._id}">
         <img [src]="doctor.profileImage">
+        <div *ngIf="showSpinner" class="spinner-wrapper">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
       </div>
       <div id="name"> {{doctor.firstName + ' '+ doctor.lastName}}
         <div>Member since: <span>{{formatDate(doctor.dateCreated)}}</span></div>
@@ -53,8 +57,12 @@
         </div>
       </div>
     </div>
-    <button id="edit" *ngIf="doctor._id == currentUserId && !isUpdating" (click)="onEditClick()">Edit</button>
-    <button id="submit" *ngIf="isUpdating" (click)="updateDoctor()"> Save</button>
+    <button id="edit" *ngIf="doctor._id == currentUserId && !isUpdating" (click)="onEditClick()">
+      <fa-icon [icon]="pencilIcon"></fa-icon>Edit
+    </button>
+    <button id="submit" *ngIf="isUpdating" (click)="updateDoctor()">
+      <fa-icon [icon]="saveIcon"></fa-icon>Save
+    </button>
   </div>
 
   <div *ngIf="activeButtons[1]" class="section">
@@ -105,7 +113,12 @@
             <div><span>Prescription: </span>
               {{appointment.result? appointment.result.prescription : 'No prescription yet'}}
             </div>
-            <button (click)="setResult(appointment)">{{ !appointment.result ? 'Add result' : 'Change result'}}</button>
+            <input #appFileInput id="file-input" type="file" (change)="addFile($event, appointment._id)" />
+            <button class="uploadButton" (click)="openAppointmentsFileDialog()">
+              <fa-icon [icon]="upload" size="1x"></fa-icon> Upload Files
+            </button>
+            <button (click)="setResult(appointment)"
+              class="resultButton">{{ !appointment.result ? 'Add result' : 'Change result'}}</button>
           </div>
         </div>
       </div>

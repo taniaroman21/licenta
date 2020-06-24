@@ -7,14 +7,17 @@ import { AppointmentDisplayModel, AppointmentShortModel } from 'src/app/shared/m
 import { AppoinmentService } from 'src/app/shared/services/appoinment.service';
 import { DoctorModel } from 'src/app/shared/models/doctor';
 import { DoctorService } from 'src/app/doctors/doctor.service';
-import { faPlus, faStar, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons';
+import { faPlus, faStar, IconDefinition, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faEmptyStar, faSave } from '@fortawesome/free-regular-svg-icons';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
 import * as moment from 'moment';
 import { ReviewService } from 'src/app/shared/services/reviews.service';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StaticDataService } from 'src/app/shared/services/static-data.service';
+import { ResourcesService } from 'src/app/shared/services/resources.service';
+import { ImageModel } from 'src/app/shared/models/image.model';
 
 
 @Component({
@@ -32,7 +35,7 @@ export class ClinicProfileComponent implements OnInit {
   public doctors: DoctorModel[];
   public filteredDoctors: DoctorModel[];
   public reviews: any[];
-  public sideNavButtons: string[];
+  public sideNavButtons: any[];
   public activeButtons: boolean[];
   public selectedDateAppointments: AppointmentDisplayModel[];
   public startHour: number;
@@ -46,7 +49,6 @@ export class ClinicProfileComponent implements OnInit {
   public reviewPageSize: number = 10;
   public totalItems: number;
   public isAllowedToReview: boolean = false;
-  public faStar = faStar;
   public isUpdating: boolean = false;
   //Update controld
   public descriptionControl = new FormControl('');
@@ -55,6 +57,12 @@ export class ClinicProfileComponent implements OnInit {
   public endHourControl = new FormControl('');
   public startDayControl = new FormControl('');
   public endDayControl = new FormControl('');
+  //icons
+  faStar = faStar;
+  pencilIcon = faPencilAlt;
+  saveIcon = faSave;
+
+  public showSpinner: boolean = false;
 
   constructor(public localStorageService: LocalStorageService,
     public clinicService: ClinicsService,
@@ -63,13 +71,16 @@ export class ClinicProfileComponent implements OnInit {
     private doctorService: DoctorService,
     private reviewService: ReviewService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    public staticDataService: StaticDataService,
+    public resourceService: ResourcesService) { }
 
   ngOnInit(): void {
     this.currentUserId = this.localStorageService.getUser() ? this.localStorageService.getUser()._id : undefined;
     this.currentUserType = this.localStorageService.getUserType();
-    this.sideNavButtons = this.currentUserId ? ["Details", "Doctors", "Schedule", "Reviews"] : ["Details", "Doctors"]
+
     this.route.params.subscribe(params => {
+      this.sideNavButtons = this.staticDataService.getSideNiveItems(params.id, "clinic");
       this.getClinic(params.id);
       this.getReviews(params.id);
       this.checkIfAllowedToReview(params.id);
@@ -91,7 +102,7 @@ export class ClinicProfileComponent implements OnInit {
         }
       }, (error) => {
         this.openSnackBar(error.error, "error");
-      })
+      });
     }
   }
   public getClinic(id: string): void {
@@ -238,6 +249,8 @@ export class ClinicProfileComponent implements OnInit {
             this.openSnackBar("Appointment added successfully", "success");
             this.appointmentsService.getClinicAppointments(this.clinic._id).subscribe(app => {
               this.appointments = app;
+            }, (error) => {
+              this.openSnackBar(error.error, "error")
             });
           }, (error) => {
             this.openSnackBar(error.error, "error");
@@ -279,32 +292,26 @@ export class ClinicProfileComponent implements OnInit {
   }
 
   public openFileDialog() {
-    this.fileInput.nativeElement.click();
-    console.log(this.fileInput)
+    if (this.currentUserId == this.clinic._id) {
+      this.fileInput.nativeElement.click();
+    }
+  }
+  public openImageModal(image: string) {
+    this.dialog.open(ModalComponent, { data: { type: "viewImage", image: image }, width: '60vw' });
   }
   public changeProfile(event) {
+    this.showSpinner = true;
+    const file = event.target.files[0];
+    this.resourceService.getReader(file, (event) => {
+      let base64 = event.target.result;
+      let imageObject: ImageModel = this.resourceService.getImageObject(file, base64);
+      this.clinicService.uploadProfile(imageObject, this.clinic._id).subscribe(res => {
+        this.clinic = res;
+        this.showSpinner = false;
+        if (this.currentUserId == this.clinic._id) this.localStorageService.setUser(res)
+      });
 
-    let getExtension = (file: File) => {
-      const lastDot = file.name.lastIndexOf('.');
-      const extension = file.name.substring(lastDot + 1);
-      return extension;
-    }
-    let file: File = event.target.files[0];
-    if (!["jpg", "png", "jpeg"].includes(getExtension(file))) {
-      console.log(["jpg", "png", "jpeg"].includes(getExtension(file)))
-      this.openSnackBar("Extension not allowed", "error");
-    }
-    else if (event.target.files && file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.clinic.profileImage = event.target["result"] as string;
-        this.clinicService.uploadProfile(this.clinic.profileImage, this.clinic._id).subscribe(res => {
-          console.log(res);
-        })
-
-      }
-    }
+    })
   }
 
 }

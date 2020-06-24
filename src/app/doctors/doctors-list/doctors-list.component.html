@@ -10,7 +10,7 @@
   </div>
   <div class="doctor-list" *ngIf="doctors">
     <div class="doctor" *ngFor="let doctor of doctors">
-      <div class="profile-image" [routerLink]="['/doctors/profile/' + doctor._id]">
+      <div class="profile-img" [routerLink]="['/doctors/profile/' + doctor._id]">
         <img [src]="doctor.profileImage" alt="profile">
       </div>
       <div class="info">

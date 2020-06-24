@@ -29,6 +29,11 @@
       padding: 24px;
       transition: all 0.2s;
       width: 100%;
+      .profile-img {
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+      }
       &:hover {
         border-left: 8px solid $default-btn-background;
         transform: scale(1.02);
@@ -42,17 +47,6 @@
           &:hover {
             border-bottom: 1px solid #7382bf;
           }
-        }
-      }
-      .profile-image {
-        border-radius: 100%;
-        cursor: pointer;
-        margin-right: 32px;
-        width: 64px;
-        height: 64px;
-        overflow: hidden;
-        img {
-          width: 100%;
         }
       }
     }

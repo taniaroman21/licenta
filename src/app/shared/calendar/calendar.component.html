@@ -19,7 +19,7 @@
       <span class="day-nr">{{day ? day.date.getDate() : ''}} </span>
       <div class="appointments">
         {{day && day.nrOfAppointments > 0 ? day.nrOfAppointments: ''}}
-        <span>{{ day && day.nrOfAppointments == 1 ? 'appointment' : (day && day.nrOfAppointments > 1 ? 'appointments': '')}}</span>
+        <fa-icon *ngIf="day && day.nrOfAppointments" [icon]="calendarIcon" size="1x"></fa-icon>
       </div>
     </div>
   </div>

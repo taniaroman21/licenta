@@ -21,7 +21,9 @@
             <span> {{clinic.reviews.stars}}</span>
             <div> Reviewed by {{clinic.reviews.totalReviews}}</div>
         </div>
-        <p>{{clinic.city.name}}, {{clinic.county.name}}</p>
+        <p>
+            <fa-icon class="icon" [icon]="locationIcon"></fa-icon>{{clinic.city.name}}, {{clinic.county.name}}
+        </p>
     </mat-card-content>
 
 
