@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { AppointmentModel, AppointmentDisplayModel } from '../models/appointment.model';
 import * as moment from 'moment';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck } from '@fortawesome/free-regular-svg-icons';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class CalendarComponent implements OnInit, OnChanges {
   public leftArrow = faChevronLeft;
   public rightArrow = faChevronRight;
   public clickedDay: Date;
+  calendarIcon = faCalendarCheck;
 
   constructor() { }
 

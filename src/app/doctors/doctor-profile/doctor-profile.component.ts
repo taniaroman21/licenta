@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { DoctorService } from '../doctor.service';
 import { DoctorModel } from 'src/app/shared/models/doctor';
 import { ActivatedRoute } from '@angular/router';
@@ -10,8 +10,12 @@ import { FormControl } from '@angular/forms';
 import { DoctorUpdateModel } from '../doctor.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faPencilAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { StaticDataService } from 'src/app/shared/services/static-data.service';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { ResourcesService } from 'src/app/shared/services/resources.service';
+import { ImageModel } from 'src/app/shared/models/image.model';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -19,8 +23,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./doctor-profile.component.scss']
 })
 export class DoctorProfileComponent implements OnInit, OnDestroy {
+  @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('appFileInput') appFileInput: ElementRef;
   public doctor: DoctorModel;
-  public sideNavButtons: string[] = ["Details"];
+  public sideNavButtons: any[];
   public activeButtons: boolean[];
   public currentUserId: string;
   public currentUserType: string;
@@ -38,7 +44,13 @@ export class DoctorProfileComponent implements OnInit, OnDestroy {
   //Icons
   chevronDown = faChevronDown;
   chevronUp = faChevronUp;
-  //
+  pencilIcon = faPencilAlt;
+  saveIcon = faSave;
+  upload = faUpload;
+
+  showSpinner: boolean = false;
+
+
   public subscriptions: Subscription[] = [];
 
   constructor(private doctorsService: DoctorService,
@@ -46,17 +58,18 @@ export class DoctorProfileComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private appointmentsService: AppoinmentService,
     public snackBar: MatSnackBar,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    public staticDataService: StaticDataService,
+    public resourceService: ResourcesService) { }
 
   ngOnInit(): void {
     this.currentUserId = this.localStorageService.getUser() ? this.localStorageService.getUser()._id : undefined;
     this.currentUserType = this.localStorageService.getUserType();
-    console.log(this.route);
     this.subscriptions.push(this.route.params.subscribe(params => {
+      this.sideNavButtons = this.staticDataService.getSideNiveItems(params.id, "doctor");
       this.doctorsService.getDoctor(params.id).subscribe(doctor => {
         console.log("here")
         this.doctor = doctor;
-        (this.currentUserId == this.doctor._id) ? this.sideNavButtons = ["Details", "Schedule", "My Patients"] : null;
         this.getAppointments(this.doctor._id);
         this.getPatients(this.doctor._id);
       }, (error) => {
@@ -187,6 +200,38 @@ export class DoctorProfileComponent implements OnInit, OnDestroy {
       this.getSelectedPatientAppointments(id);
 
     }
+  }
+  public openFileDialog() {
+    this.fileInput.nativeElement.click();
+    console.log(this.fileInput)
+  };
+  public changeProfile(event) {
+    this.showSpinner = true;
+    const file = event.target.files[0];
+    this.resourceService.getReader(file, (event) => {
+      try {
+        const imageObject: { file: string | ArrayBuffer, name: string, extension: string } = this.resourceService.getImageObject(file, event.target.result);
+        this.doctorsService.uploadProfile(imageObject, this.doctor._id).subscribe(res => {
+          this.doctor = res;
+          if (this.currentUserId == this.doctor._id) this.localStorageService.setUser(res);
+          this.showSpinner = false;
+        })
+      } catch (error) {
+        this.openSnackBar(error.message, "error");
+      }
+    })
+  }
+  public openAppointmentsFileDialog() {
+    this.appFileInput.nativeElement.click();
+    console.log(this.fileInput)
+  }
+  public addFile(event, appointmentID) {
+    const file = event.target.files[0];
+    let formData = new FormData();
+    formData.append('file', file);
+    this.appointmentsService.addAppointmentDocs(appointmentID, formData).subscribe(res => {
+      console.log(res);
+    })
   }
 
 }

@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DoctorRegisterModel, DoctorModel } from '../models/doctor';
 import { AppointmentResult } from '../models/appointment.model';
 import { DoctorService } from 'src/app/doctors/doctor.service';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ModalComponent implements OnInit {
   public filteredDoctors: DoctorModel[];
   public doctorExists: boolean = false;
   public existingDoctor: DoctorModel;
+  closeIcon = faTimes;
   constructor(private localStorageService: LocalStorageService,
     public doctorService: DoctorService,
     public formBuilder: FormBuilder, @Inject(MAT_DIALOG_DATA) public data,

@@ -1,11 +1,19 @@
 <app-menu></app-menu>
-<app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
-<div class="content">
+<div class="page-wrapper">
+  <app-side-nav [buttons]="sideNavButtons" (active)="clickSideNav($event)"></app-side-nav>
   <div *ngIf="activeButtons[0] && clinic" class="section">
     <div class="header-details">
       <input #fileInput id="file-input" type="file" (change)="changeProfile($event)" />
-      <div class="profile-img" (click)="openFileDialog()" [ngClass]="{'hoverable': currentUserId == clinic._id}">
-        <img [src]="clinic.profileImage">
+      <div class="profile-img-wrapper">
+
+        <div class="profile-img hoverable" (click)="openImageModal(clinic.profileImage)">
+          <img [src]="clinic.profileImage">
+          <div *ngIf="showSpinner" class="spinner-wrapper">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        </div>
+        <button (click)="openFileDialog()" *ngIf="currentUserId == clinic._id" class="upload-btn"> Upload
+          profile</button>
       </div>
       <div id="name"> {{clinic.name}}
         <div>Member since: <span>{{formatDate(clinic.dateCreated)}}</span></div>
@@ -82,8 +90,13 @@
     </div>
 
 
-    <button id="edit" *ngIf="clinic._id == currentUserId && !isUpdating" (click)="onEditClick()">Edit</button>
-    <button id="submit" *ngIf="isUpdating" (click)="updateClinic()"> Save</button>
+    <button id="edit" *ngIf="clinic._id == currentUserId && !isUpdating" (click)="onEditClick()">
+      <fa-icon [icon]="pencilIcon"></fa-icon>Edit
+    </button>
+    <button id="submit" *ngIf="isUpdating" (click)="updateClinic()">
+      <fa-icon [icon]="saveIcon"></fa-icon> Save
+    </button>
+    <img class="illustration" src="../../../assets/clinic-illustration.svg">
   </div>
 
 
@@ -94,6 +107,7 @@
     </button>
     <div class="doctors">
       <div class="field-buttons">
+        <img src="../../../assets/undraw_medical_care_movn.svg">
         <button *ngFor="let field of clinic.fields; let i = index" (click)="toggleField(i, field)"
           [ngClass]="{'active': doctorFields[i]}">{{field}}</button>
         <button (click)="toggleField(doctorFields.length - 1)"
@@ -148,6 +162,7 @@
 
   <div *ngIf="activeButtons[3]" class="section">
     <div class="leave-review" [ngClass]="{'disabled': !isAllowedToReview}">
+      <img class="review-illustration" src="../../../assets/review-illustration.svg">
       <h3 *ngIf="isAllowedToReview">Leave a review</h3>
       <h3 *ngIf="!isAllowedToReview && currentUserId != clinic._id">You can't leave a review unless you've had an
         appointment with this clinic.</h3>

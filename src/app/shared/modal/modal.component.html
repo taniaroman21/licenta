@@ -1,6 +1,9 @@
 <div class="modal-wrapper">
+  <fa-icon [icon]="closeIcon" size="lg" mat-dialog-close class="close-icon"></fa-icon>
   <h2 mat-dialog-title>
-    {{ type == 'addDoctor' ? 'Add doctor': (type == 'addAppointment' ? 'Add appointment': 'Add result')}}</h2>
+    {{ type == 'addDoctor' ? 'Add doctor': (type == 'addAppointment' ? 'Add appointment': ( type =='addResult' ? 'Add result' : ''))}}
+  </h2>
+
   <mat-divider></mat-divider>
   <mat-dialog-content>
     <div class="add-doctor" *ngIf="type == 'addAppointment'">
@@ -116,7 +119,10 @@
         </mat-form-field>
       </form>
     </div>
+    <div class="image" *ngIf="type == 'viewImage'">
+      <img [src]="data.image">
+    </div>
   </mat-dialog-content>
-  <mat-dialog-actions> <button mat-dialog-close class="close">Close</button>
+  <mat-dialog-actions *ngIf="type != 'viewImage'"> <button mat-dialog-close class="close">Close</button>
     <button class="submit" (click)="onSubmit()">Submit</button></mat-dialog-actions>
 </div>

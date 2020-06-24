@@ -4,10 +4,10 @@ mat-form-field {
   width: 100%;
 }
 mat-dialog-content {
-  padding: 32px 64px;
+  padding: 4% 8%;
 }
 mat-dialog-actions {
-  padding: 32px 64px;
+  padding: 4% 8%;
   .close {
     background-color: white;
     color: #7382bf;
@@ -41,4 +41,22 @@ button {
       min-width: 100px;
     }
   }
+}
+.image {
+  width: 100%;
+  height: 100%;
+  max-height: 60vh;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+    max-height: 58vh;
+  }
+}
+
+.close-icon {
+  color: gray;
+  cursor: pointer;
+  float: right;
 }

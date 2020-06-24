@@ -27,39 +27,11 @@
       }
     }
   }
-  #file-input {
-    display: none;
-  }
   .profile-img {
-    border-radius: 100%;
     height: 100px;
     margin-right: 32px;
-    overflow: hidden;
     width: 100px;
     min-width: 100px;
-    img {
-      width: 100%;
-    }
-    &.hoverable {
-      position: relative;
-      &:hover::after {
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.3);
-        content: "Upload";
-        color: white;
-        cursor: pointer;
-        display: flex;
-        font-size: 12px;
-        height: 100%;
-        justify-content: center;
-        left: 0;
-        position: absolute;
-        text-align: center;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-      }
-    }
   }
   .stars {
     margin-left: auto;
@@ -218,25 +190,6 @@
   h2 {
     color: gray;
   }
-  #edit {
-    background: white;
-    border: 1px solid #7382bf;
-    border-radius: 5px;
-    color: #7382bf;
-    cursor: pointer;
-    margin: 32px;
-    padding: 6px 24px;
-    color: #7382bf;
-  }
-  #submit {
-    background-color: green;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    margin: 32px;
-    padding: 6px 24px;
-  }
   .add-doctor-btn {
     background: white;
     border: none;
@@ -360,7 +313,7 @@
           margin-right: 32px;
           min-width: 100px;
         }
-        button {
+        .resultButton {
           background: transparent;
           border: 1px solid #ebad02;
           color: #ebad02;
@@ -374,6 +327,18 @@
           bottom: 50%;
           transform: translateY(-50%);
         }
+        .uploadButton {
+          background: transparent;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          border: 1px solid $default-btn-background;
+          color: $default-btn-background;
+          cursor: pointer;
+          border-radius: 5px;
+          min-height: 30px;
+          padding: 8px 12px;
+        }
       }
     }
   }
@@ -383,4 +348,7 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+#file-input {
+  display: none;
 }

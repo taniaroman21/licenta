@@ -16,9 +16,18 @@
     &:not(.active):hover {
       background-color: lightgray;
     }
+    fa-icon {
+      margin-right: 16px;
+    }
   }
   .active {
     background-color: $default-btn-background;
     color: white;
   }
+}
+:host {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  z-index: 100;
 }

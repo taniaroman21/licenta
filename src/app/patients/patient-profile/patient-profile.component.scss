@@ -35,32 +35,8 @@
     border-radius: 100%;
     height: 100px;
     margin-right: 32px;
-    overflow: hidden;
     width: 100px;
     min-width: 100px;
-    img {
-      width: 100%;
-    }
-    &.hoverable {
-      position: relative;
-      &:hover::after {
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.3);
-        content: "Upload";
-        color: white;
-        cursor: pointer;
-        display: flex;
-        font-size: 12px;
-        height: 100%;
-        justify-content: center;
-        left: 0;
-        position: absolute;
-        text-align: center;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-      }
-    }
   }
   .stars {
     margin-left: auto;
@@ -205,24 +181,14 @@
   align-items: center;
   flex-direction: column;
   padding: 32px 100px;
-  #edit {
-    background: white;
-    border: 1px solid #7382bf;
-    border-radius: 5px;
-    color: #7382bf;
-    cursor: pointer;
-    margin: 32px;
-    padding: 6px 24px;
-    color: #7382bf;
-  }
-  #submit {
-    background-color: green;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    margin: 32px;
-    padding: 6px 24px;
+  position: relative;
+  .illustration {
+    position: absolute;
+    bottom: -500px;
+    right: 0;
+    width: 40%;
+    opacity: 0.5;
+    z-index: -10;
   }
 }
 input[type="number"]::-webkit-inner-spin-button,

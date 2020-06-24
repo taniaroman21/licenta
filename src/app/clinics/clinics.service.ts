@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ClinicUpdateModel } from './clinics.model';
+import { ImageModel } from '../shared/models/image.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +32,9 @@ export class ClinicsService {
       })
     });
   }
-  public uploadProfile(file: string, clinicId: string): Observable<any> {
+  public uploadProfile(file: ImageModel, clinicId: string): Observable<any> {
     console.log(file)
-    return this.http.put(environment.apiEndpoint + "/clinics/upload/" + clinicId, file, {
+    return this.http.put(environment.apiEndpoint + `/clinics/${clinicId}/upload`, file, {
       headers: new HttpHeaders({
         "x-auth-token": this.localStorageService.getToken(),
       })
