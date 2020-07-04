@@ -113,6 +113,11 @@
             <div><span>Prescription: </span>
               {{appointment.result? appointment.result.prescription : 'No prescription yet'}}
             </div>
+            <div class="documents"><span>Docs: </span>
+              <div *ngFor="let res of appointment.resultDocs" class="doc">
+                <a [href]="res.file" target="_self" [download]="res.name">
+                  {{res.name}}</a></div>
+            </div>
             <input #appFileInput id="file-input" type="file" (change)="addFile($event, appointment._id)" />
             <button class="uploadButton" (click)="openAppointmentsFileDialog()">
               <fa-icon [icon]="upload" size="1x"></fa-icon> Upload Files
@@ -120,6 +125,7 @@
             <button (click)="setResult(appointment)"
               class="resultButton">{{ !appointment.result ? 'Add result' : 'Change result'}}</button>
           </div>
+
         </div>
       </div>
     </div>

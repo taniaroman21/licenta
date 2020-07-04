@@ -63,6 +63,12 @@
                 <div><span>Prescription: </span>{{app.result.prescription}}</div>
               </div>
               <div *ngIf="!app.result"> No results added yet by your doctor.</div>
+              <div *ngIf="app.resultDocs" class="documents">
+                <span>Docs</span>
+                <div *ngFor="let doc of app.resultDocs" class="doc">
+                  <a [href]="doc.file" target="_self" [download]="doc.name">
+                    {{doc.name}}</a></div>
+              </div>
             </div>
           </div>
         </mat-expansion-panel>
