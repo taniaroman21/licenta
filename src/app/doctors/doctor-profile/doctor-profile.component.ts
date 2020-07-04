@@ -177,7 +177,6 @@ export class DoctorProfileComponent implements OnInit, OnDestroy {
           if (this.selectedPatient) {
             this.getSelectedPatientAppointments(this.selectedPatient);
           }
-          this.expandPatient
         }, (error) => {
           this.openSnackBar(error.error, "error");
         })
@@ -228,9 +227,11 @@ export class DoctorProfileComponent implements OnInit, OnDestroy {
   public addFile(event, appointmentID) {
     const file = event.target.files[0];
     let formData = new FormData();
-    formData.append('file', file);
+    formData.append(`${file.name}`, file);
     this.appointmentsService.addAppointmentDocs(appointmentID, formData).subscribe(res => {
-      console.log(res);
+      if (this.selectedPatient) {
+        this.getSelectedPatientAppointments(this.selectedPatient);
+      }
     })
   }
 

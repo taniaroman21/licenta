@@ -339,6 +339,20 @@
           min-height: 30px;
           padding: 8px 12px;
         }
+        .documents {
+          display: flex;
+          flex-wrap: wrap;
+          .doc {
+            background: $default-btn-background;
+            border-radius: 2px;
+            margin: 0 8px;
+            padding: 4px 8px;
+            a {
+              color: white;
+              text-decoration: none;
+            }
+          }
+        }
       }
     }
   }

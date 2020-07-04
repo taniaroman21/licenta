@@ -55,10 +55,10 @@ export class AppoinmentService {
     });
   }
   public addAppointmentDocs(appointmentId: string, file: FormData): Observable<any> {
-    return this.http.post(environment.apiEndpoint + `/appointments/upload/${appointmentId}`, file, {
+    return this.http.put(environment.apiEndpoint + `/appointments/upload/${appointmentId}`, file, {
       headers: new HttpHeaders({
         "x-auth-token": this.localStorageService.getToken(),
-        "Content-Type": "multipart/form-data"
+        // "Content-Type": "multipart/form-data"
       }),
     });
   }
